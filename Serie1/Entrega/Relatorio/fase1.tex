@@ -1,0 +1,200 @@
+\documentclass[11pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{graphicx, color}
+\usepackage{booktabs}
+\usepackage[toc,page]{appendix}
+\usepackage{pdfpages}
+\usepackage{multicol}
+\usepackage{changepage}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage[encoding,filenameencoding=utf8]{grffile}
+\usepackage{subcaption}
+\usepackage{csquotes}
+\usepackage{hyperref, bookmark}
+
+\setlength{\columnseprule}{0.5pt}
+\def\columnseprulecolor{\color{black}}
+
+% Package de algoritmos
+\usepackage[portuguese,ruled,lined]{algorithm2e}
+
+% Portuguese Encoding 
+\usepackage[portuguese]{babel}
+\usepackage[T1]{fontenc}
+
+% import Java
+\usepackage{listings} 
+
+% Header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+	\fancyhf{}
+		\lhead{LEIC - ISEL}
+    \rhead{Comunicações}
+
+% Footer
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+\fancyfoot[CE,CO]{\thepage}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CHANGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Redefine the plain page style
+\fancypagestyle{plain}{
+\pagestyle{fancy}
+  \fancyhf{}
+	\lhead{LEIC - ISEL}
+	\rhead{Segurança Informática}
+	\renewcommand{\headrulewidth}{1pt}
+	\renewcommand{\footrulewidth}{1pt}
+\fancyfoot[CE,CO]{\thepage}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CHANGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Titulo e informação de capa
+\title{Primeira Serie de exercícios}
+\date{Outubro 2019}
+
+% Define Chapter heading
+\makeatletter
+\def\@makechapterhead#1{%
+  \vspace*{20\p@}%                                 % Insert 50pt (vertical) space
+  {\parindent \z@ \raggedright \normalfont         % No paragraph indent, ragged right
+%    \interlinepenalty\@M                           % Penalty
+    \huge \bfseries #1\par\nobreak                 % Huge, bold chapter title
+    \vskip 10\p@                                   % Insert 40pt (vertical) space
+  }}
+  
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CHANGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatother
+
+%Custom commands
+
+\renewcommand\appendixpagename{Anexos}
+\renewcommand\appendixname{Anexo}
+\renewcommand\appendixtocname{Anexos}
+
+\newenvironment{subs}
+  {\adjustwidth{2.5em}{0pt}}
+  {\endadjustwidth}
+
+
+% Retira a indentação ao início dos parágrafos 
+\setlength{\parindent}{0em}
+\newcommand{\blank}[1]{\hspace*{#1}\linebreak[0]}
+
+% Section and Subsection spacing:
+\usepackage{titlesec}
+\usepackage{lipsum}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	DOCUMENT BEGINS	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%										COVER											%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage} 
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+\includegraphics[width=130pt, keepaspectratio=true]{img/logo_isel}\\[1cm] % Include a department/university logo - this will require the graphicx package
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\LARGE INSTITUTO SUPERIOR DE ENGENHARIA DE LISBOA}\\[1.5cm] % Name of your university/college
+\vskip 40pt
+\textsc{\Large SEGURANÇA INFORMÁTICA}\\[0.5cm] % Major heading such as course name
+\textsc{\large LICENCIATURA ENGENHARIA INFORMÁTICA E COMPUTADORES}\\[0.5cm] % Minor heading such as course title
+\vskip 40pt
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \LARGE \bfseries FASE DE EXERCÍCIOS }\\[0.4cm]
+{ \huge \bfseries Fase 1}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+\vskip 70pt
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Autores:}\\
+43552 - Samuel \textsc{Costa}\\
+43320 - André \textsc{Mendes}
+\end{flushleft}
+\end{minipage}
+~
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Docente:} \\
+José \textsc{Simão}\\
+\end{flushright}
+\end{minipage}\\[3cm]
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large 29 de Dezembro de 2018}\\[3cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+\renewcommand\thesection{\arabic{section}}
+\pdfbookmark{\contentsname}{toc}
+\tableofcontents
+
+
+\newpage
+
+
+\section{Introdução}
+O trabalho realizado para este fase pretende que os temas desenvolvidos durante as aulas sejam postos em prática. Para esta fase os exercícios focaram essencialmente a primeira parte da matéria.\\
+
+\begin{itemize}
+  \item Esquemas e Primitivas Criptográficas
+  \item Java Cryptographic Architecture (JCA)
+  \item Certificados digitais e Infraestrutura de Chave Pública
+  \item Protocolo Criptográfico Transport Layer Security (SSL/TLS)
+\end{itemize}
+
+Neste trabalho prático pretendemos responder aos vários exercícios propostos e implementar uma demonstração dos pontos referidos.
+
+\newpage
+
+\section{Primeira série de exercícios}
+
+\subsection*{Exercício 1}
+
+
+\newpage
+
+\section{Conclusão}
+
+
+\end{document}
