@@ -30,46 +30,6 @@ public class MacThenEncrypt {
         return MacThenEncrypt.verify(kam,decryptedMsg);
     }
 
-        public static boolean macThenEncryptOld(String msgStr) throws NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException, IOException, InvalidAlgorithmParameterException, DecryptionException, SignatureException {
-        // Original Message to Encrypt
-        byte [] msg = msgStr.getBytes(UTF_8);
-
-        // Applying HMAC to generate mark with K2
-        KeyGenerator kg = KeyGenerator.getInstance("HmacSHA256");
-        SecretKey k2 = kg.generateKey();
-        Mac mac = Mac.getInstance("HmacSHA256");
-        mac.init(k2);
-        byte[] mark = mac.doFinal(msg);
-
-        // Concatenating message and mark
-        byte[] msgAndMark = addAll(mark,msg);
-
-        // Generating k1 and initial vector
-        KeyGenerator kg2 = KeyGenerator.getInstance("AES");
-        SecretKey k1 = kg2.generateKey();
-        byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        IvParameterSpec ivspec = new IvParameterSpec(iv);
-
-        // Encrypting message and mark
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init( Cipher.ENCRYPT_MODE, k1, ivspec);
-        byte[] encrypted = cipher.doFinal(msgAndMark);
-
-        // Deciphering messageAndMark
-        Cipher decipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        decipher.init(Cipher.DECRYPT_MODE, k1, ivspec);
-        byte[] decryptedMsgAndMark = decipher.doFinal(encrypted);
-
-        if(!Arrays.equals(msgAndMark,decryptedMsgAndMark))
-            throw new DecryptionException();
-
-        byte[] decryptedMark = Arrays.copyOfRange(decryptedMsgAndMark, 0, mark.length);
-        byte[] decryptedMsg = Arrays.copyOfRange(decryptedMsgAndMark, mark.length,decryptedMsgAndMark.length);
-
-        byte[] verif = mac.doFinal(decryptedMsg);
-        return Arrays.equals(verif,decryptedMark);
-    }
-
 
     public static MacAndMark mac(String algorithm, byte[] msg) throws NoSuchAlgorithmException, InvalidKeyException {
 
