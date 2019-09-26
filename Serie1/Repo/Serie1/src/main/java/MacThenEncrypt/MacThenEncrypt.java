@@ -8,66 +8,71 @@ import javax.crypto.spec.IvParameterSpec;
 import java.io.IOException;
 import java.security.*;
 import java.util.Arrays;
+import java.util.Random;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class MacThenEncrypt {
 
+    private static final int INITIAL_VECTOR_SIZE = 16;
+
     public static boolean macThenEncrypt(String msgStr) throws NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException, IOException, InvalidAlgorithmParameterException, DecryptionException, SignatureException {
         byte[] originalMsg = "The quick brown fox jumps over the lazy dog".getBytes(UTF_8);
         String macAlgorithm = "HmacSHA256";
-        MacAndMark kam = MacThenEncrypt.mac(macAlgorithm, originalMsg);
+        MacAndMark keyAndMsg = MacThenEncrypt.mac(macAlgorithm, originalMsg);
 
-        byte[] msgAndMark = addAll(kam.mark,originalMsg);
+        byte[] msgAndMark = addAll(keyAndMsg.mark,originalMsg);
 
         String cipherAlgorithm = "AES/CBC/PKCS5Padding";
-        KeyIVAndMsg kiam = MacThenEncrypt.encryptUsingAES(cipherAlgorithm, msgAndMark);
-        byte[] decrypted = MacThenEncrypt.decryptUsingAES(cipherAlgorithm, kiam);
+        KeyIVAndMsg keyInitialVectorAndMessage = MacThenEncrypt.encryptUsingAES(cipherAlgorithm, msgAndMark);
+        byte[] decrypted = MacThenEncrypt.decryptUsingAES(cipherAlgorithm, keyInitialVectorAndMessage);
 
-        byte[] decryptedMark = Arrays.copyOfRange(decrypted, 0, kam.mark.length);
-        byte[] decryptedMsg = Arrays.copyOfRange(decrypted, kam.mark.length,decrypted.length);
+        byte[] decryptedMark = Arrays.copyOfRange(decrypted, 0, keyAndMsg.mark.length);
+        byte[] decryptedMsg = Arrays.copyOfRange(decrypted, keyAndMsg.mark.length,decrypted.length);
 
-        return MacThenEncrypt.verify(kam,decryptedMsg);
+        return MacThenEncrypt.verify(keyAndMsg,decryptedMsg);
     }
-
 
     public static MacAndMark mac(String algorithm, byte[] msg) throws NoSuchAlgorithmException, InvalidKeyException {
 
         // Applying HMAC to generate mark with K2
         KeyGenerator kg = KeyGenerator.getInstance(algorithm);
-        SecretKey k2 = kg.generateKey();
+        SecretKey key = kg.generateKey();
         Mac mac = Mac.getInstance("HmacSHA256");
-        mac.init(k2);
+        mac.init(key);
         byte[] mark = mac.doFinal(msg);
 
         return new MacAndMark(mac,mark);
     }
+
     public static boolean verify(MacAndMark kam, byte[] originalMsg) {
         Mac mac = kam.mac;
-        byte[] verif = mac.doFinal(originalMsg);
-        return Arrays.equals(verif,kam.mark);
+        byte[] verify = mac.doFinal(originalMsg);
+        return Arrays.equals(verify,kam.mark);
     }
 
     public static KeyIVAndMsg encryptUsingAES(String algorithm, byte[] msg) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        KeyGenerator kg2 = KeyGenerator.getInstance(algorithm.split("/")[0]);
-        SecretKey k1 = kg2.generateKey();
-        //TODO generate iv randomly
-        byte[] iv = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        IvParameterSpec ivspec = new IvParameterSpec(iv);
+        KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm.split("/")[0]);
+        SecretKey k1 = keyGenerator.generateKey();
+
+        byte[] initialVector = new byte[INITIAL_VECTOR_SIZE];
+        new Random().nextBytes(initialVector);
+
+        IvParameterSpec initialVectorSpecifications = new IvParameterSpec(initialVector);
 
         // Encrypting message
         Cipher cipher = Cipher.getInstance(algorithm);
-        cipher.init( Cipher.ENCRYPT_MODE, k1, ivspec);
+        cipher.init( Cipher.ENCRYPT_MODE, k1, initialVectorSpecifications);
         byte[] encrypted = cipher.doFinal(msg);
 
-        return new KeyIVAndMsg(k1,iv,encrypted);
+        return new KeyIVAndMsg(k1,initialVector,encrypted);
     }
 
-    public static byte[] decryptUsingAES(String algorithm, KeyIVAndMsg kiam) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        SecretKey key = kiam.key;
-        byte[] iv = kiam.iv;
-        byte[] msg = kiam.msg;
+    public static byte[] decryptUsingAES(String algorithm, KeyIVAndMsg keyInitialVectorAndMessage) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+        SecretKey key = keyInitialVectorAndMessage.key;
+        byte[] iv = keyInitialVectorAndMessage.initialVector;
+        byte[] msg = keyInitialVectorAndMessage.msg;
         IvParameterSpec ivspec = new IvParameterSpec(iv);
 
         Cipher decipher = Cipher.getInstance(algorithm);

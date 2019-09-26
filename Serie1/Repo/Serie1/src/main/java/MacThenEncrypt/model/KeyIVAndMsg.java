@@ -4,12 +4,12 @@ import javax.crypto.SecretKey;
 
 public class KeyIVAndMsg {
     public SecretKey key;
-    public byte[] iv;
+    public byte[] initialVector;
     public byte[] msg;
 
     public KeyIVAndMsg(SecretKey key, byte[] iv, byte[] msg) {
         this.key = key;
-        this.iv = iv;
+        this.initialVector = iv;
         this.msg = msg;
     }
 }
