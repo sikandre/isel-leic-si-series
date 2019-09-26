@@ -1,4 +1,4 @@
-package MacThenEncryptObjectOriented.mac;
+package MacThenEncryptJCA.mac;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.Mac;

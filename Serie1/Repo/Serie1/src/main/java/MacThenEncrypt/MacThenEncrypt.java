@@ -1,9 +1,8 @@
 package MacThenEncrypt;
 
 import MacThenEncrypt.Exceptions.DecryptionException;
+import MacThenEncrypt.model.KeyIVAndMsg;
 import MacThenEncrypt.model.MacAndMark;
-import model.KeyIVAndMsg;
-
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import java.io.IOException;

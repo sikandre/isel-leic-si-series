@@ -1,4 +1,4 @@
-package MacThenEncryptObjectOriented.cipher;
+package MacThenEncryptJCA.cipher;
 
 public class Decrypter {
     public Decrypter(String algorithm) {

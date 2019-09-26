@@ -1,4 +1,4 @@
-package model;
+package MacThenEncrypt.model;
 
 import javax.crypto.SecretKey;
 

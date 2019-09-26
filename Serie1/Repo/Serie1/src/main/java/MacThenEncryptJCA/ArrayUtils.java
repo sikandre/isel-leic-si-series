@@ -1,4 +1,4 @@
-package MacThenEncryptObjectOriented;
+package MacThenEncryptJCA;
 
 import java.util.Arrays;
 

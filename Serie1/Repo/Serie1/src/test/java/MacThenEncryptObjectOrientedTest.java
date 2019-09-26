@@ -1,10 +1,10 @@
-import MacThenEncryptObjectOriented.ArrayUtils;
-import MacThenEncryptObjectOriented.cipher.Decrypter;
-import MacThenEncryptObjectOriented.cipher.Encrypter;
-import MacThenEncryptObjectOriented.cipher.Message;
-import MacThenEncryptObjectOriented.mac.Mark;
-import MacThenEncryptObjectOriented.mac.MarkProducer;
-import MacThenEncryptObjectOriented.mac.Verifier;
+import MacThenEncryptJCA.ArrayUtils;
+import MacThenEncryptJCA.cipher.Decrypter;
+import MacThenEncryptJCA.cipher.Encrypter;
+import MacThenEncryptJCA.cipher.Message;
+import MacThenEncryptJCA.mac.Mark;
+import MacThenEncryptJCA.mac.MarkProducer;
+import MacThenEncryptJCA.mac.Verifier;
 import org.junit.jupiter.api.Test;
 
 import java.security.InvalidKeyException;

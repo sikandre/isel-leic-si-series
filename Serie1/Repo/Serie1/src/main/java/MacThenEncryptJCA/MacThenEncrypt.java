@@ -1,4 +1,4 @@
-package MacThenEncryptObjectOriented;
+package MacThenEncryptJCA;
 
 public class MacThenEncrypt {
     public static void main(String[] args) {

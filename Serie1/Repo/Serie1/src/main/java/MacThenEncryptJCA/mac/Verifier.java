@@ -1,4 +1,4 @@
-package MacThenEncryptObjectOriented.mac;
+package MacThenEncryptJCA.mac;
 
 public class Verifier {
 
