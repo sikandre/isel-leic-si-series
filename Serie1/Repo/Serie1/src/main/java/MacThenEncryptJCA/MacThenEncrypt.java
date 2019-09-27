@@ -14,7 +14,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class MacThenEncrypt {
 
-        public static MacThenEncryptResponse macThenEncrypt(String txt) throws GeneralSecurityException {
+    public static MacThenEncryptResponse macThenEncrypt(String txt) throws GeneralSecurityException {
         byte[] originalMsg = "The quick brown fox jumps over the lazy dog".getBytes(UTF_8);
 
         //authenticate
@@ -25,17 +25,19 @@ public class MacThenEncrypt {
         //cipher
         String cipherAlgorithm = "AES/CBC/PKCS5Padding";
         Cipher cipher = new CipherImp();
-        return new MacThenEncryptResponse(cipher.encryptUsingAES(authMessage.msg, cipherAlgorithm), authMessage.mark, authMessage.getMac());
+        return new MacThenEncryptResponse(cipher.encryptUsingAES(authMessage.msg, cipherAlgorithm), authMessage.getMac());
     }
 
-    public static boolean DecriptThenAuthenticate(MacThenEncryptResponse cipherMessage)throws GeneralSecurityException{
+    public static boolean DecriptThenAuthenticate(MacThenEncryptResponse cipherMessage) throws GeneralSecurityException {
+        //decrypt
         String cipherAlgorithm = "AES/CBC/PKCS5Padding";
         Cipher cipher = new CipherImp();
         byte[] decryptMsg = cipher.decryptUsingAES(cipherMessage.getCipherMessage(), cipherAlgorithm);
-        byte[] decryptedMsg = Arrays.copyOfRange(decryptMsg, cipherMessage.getAuthMark().length,decryptMsg.length);
 
+        //authenticate
+        byte[] authMsg = Arrays.copyOfRange(decryptMsg, cipherMessage.getMac().getMacLength(), decryptMsg.length);
         Mac mac = new MacImp();
-        return mac.verify(cipherMessage, decryptedMsg);
+        return mac.verify(cipherMessage, authMsg);
     }
 
 }

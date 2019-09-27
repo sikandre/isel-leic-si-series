@@ -18,7 +18,7 @@ public class MacImp implements Mac {
         javax.crypto.Mac mac = javax.crypto.Mac.getInstance("HmacSHA256");
         mac.init(key);
         byte[] mark = mac.doFinal(message);
-        return new AuthMessage(addAll(mark, message), mark, mac);
+        return new AuthMessage(addAll(mark, message), mac);
     }
 
     @Override
