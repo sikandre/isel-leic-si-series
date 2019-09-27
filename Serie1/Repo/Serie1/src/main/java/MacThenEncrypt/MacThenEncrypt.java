@@ -74,7 +74,6 @@ public class MacThenEncrypt {
         byte[] iv = keyInitialVectorAndMessage.initialVector;
         byte[] msg = keyInitialVectorAndMessage.msg;
         IvParameterSpec ivspec = new IvParameterSpec(iv);
-
         Cipher decipher = Cipher.getInstance(algorithm);
         decipher.init(Cipher.DECRYPT_MODE, key, ivspec);
         byte[] decryptedMsg = decipher.doFinal(msg);

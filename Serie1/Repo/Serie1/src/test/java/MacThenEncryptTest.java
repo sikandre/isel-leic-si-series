@@ -1,7 +1,7 @@
 import MacThenEncrypt.Exceptions.DecryptionException;
 import MacThenEncrypt.MacThenEncrypt;
+import MacThenEncrypt.model.KeyIVAndMsg;
 import MacThenEncrypt.model.MacAndMark;
-import model.KeyIVAndMsg;
 import org.junit.jupiter.api.Test;
 
 import javax.crypto.BadPaddingException;

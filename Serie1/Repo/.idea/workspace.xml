@@ -2,8 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="78b7d955-d111-4b18-8cae-b4896c9015b0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Exceptions/DecryptionException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Mac/Abstractions/Mac.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Mac/MacImp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/CipherMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/MacThenEncryptResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Abstractions/Cipher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/CipherImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/MacThenEncrypt.java" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/MacThenEncrypt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/model/KeyIVAndMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/model/KeyIVAndMsg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/MacThenEncrypt.java" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/MacThenEncrypt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Decrypter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Encrypter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/AuthMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/mac/Mark.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/mac/MarkProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/mac/Verifier.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Serie1/src/test/java/MacThenEncryptObjectOrientedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/test/java/MacThenEncryptObjectOrientedTest.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -17,6 +32,37 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/MacThenEncrypt.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="391">
+                    <caret line="45" column="40" selection-start-line="45" selection-start-column="19" selection-end-line="45" selection-end-column="40" />
+                    <folding>
+                      <element signature="imports" expanded="true" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/model/MacAndMark.java">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="68">
+                    <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -24,11 +70,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/MacThenEncrypt.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/MacThenEncrypt.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-335">
-              <caret line="24" column="49" selection-start-line="24" selection-start-column="45" selection-end-line="24" selection-end-column="49" />
+            <state relative-caret-position="338">
+              <caret line="27" column="40" selection-start-line="27" selection-start-column="40" selection-end-line="27" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -37,55 +83,91 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/MacThenEncrypt.java">
+        <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/MacThenEncryptResponse.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/mac/Mark.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/jre/lib/jce.jar!/javax/crypto/Cipher.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="45" column="13" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/model/KeyIVAndMsg.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Decrypter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+            <state relative-caret-position="119">
+              <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
               <folding>
-                <element signature="e#147#148#0" expanded="true" />
-                <element signature="e#192#193#0" expanded="true" />
+                <element signature="e#354#355#0" expanded="true" />
+                <element signature="e#390#391#0" expanded="true" />
+                <element signature="e#425#426#0" expanded="true" />
+                <element signature="e#456#457#0" expanded="true" />
+                <element signature="e#563#564#0" expanded="true" />
+                <element signature="e#589#590#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/CipherMessage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="22" lean-forward="true" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Abstractions/Cipher.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Mac/Abstractions/Mac.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Mac/MacImp.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/AuthMessage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+              <folding>
+                <element signature="e#320#321#0" expanded="true" />
+                <element signature="e#346#347#0" expanded="true" />
+                <element signature="e#381#382#0" expanded="true" />
+                <element signature="e#411#412#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -107,17 +189,37 @@
         <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptObjectOriented/mac/Verifier.java" />
         <option value="$PROJECT_DIR$/Serie1/src/test/java/MacThenEncryptObjectOrientedTest.java" />
         <option value="$PROJECT_DIR$/Serie1/src/test/java/MacThenEncryptTest.java" />
-        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/MacThenEncrypt.java" />
         <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/model/KeyIVAndMsg.java" />
         <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Decrypter.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Cipher.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/mac/Mark.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/mac/MAC.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/mac/Verifier.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Abstractions/MAC.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/mac/MarkProducer.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/KeyIVAndMsg.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Exceptions/DecryptionException.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/MacThenEncrypt.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/CipherImp.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Abstractions/Cipher.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/Message.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Abstractions/Mac.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/mac/Abstractions/Mac.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/CipherMessage.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/MacThenEncryptResponse.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Mac/Abstractions/Mac.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Mac/MacImp.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/AuthMessage.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/MacThenEncrypt.java" />
+        <option value="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Mac/MarkProducer.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="182" />
-    <option name="y" value="-19" />
-    <option name="width" value="1038" />
-    <option name="height" value="688" />
+    <option name="x" value="-1685" />
+    <option name="y" value="-333" />
+    <option name="width" value="1298" />
+    <option name="height" value="860" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -188,23 +290,7 @@
             </path>
             <path>
               <item name="SegurancaInformatica" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="Serie1" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="MacThenEncryptJCA" type="462c0819:PsiDirectoryNode" />
-              <item name="cipher" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SegurancaInformatica" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Repo" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="Serie1" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="MacThenEncryptJCA" type="462c0819:PsiDirectoryNode" />
-              <item name="mac" type="462c0819:PsiDirectoryNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
@@ -221,7 +307,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1569533852486" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1569583319228" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/Serie1/src/main/java" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -230,7 +316,12 @@
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="MacThenEncryptJCA.Exceptions" />
+      <recent name="MacThenEncryptJCA.Model" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Isel\1920i\Segurança Informatica\isel-leic-si-series\Serie1\Repo\Serie1\src\main\java\MacThenEncryptJCA\mac" />
       <recent name="D:\Isel\1920i\Segurança Informatica\isel-leic-si-series\Serie1\Repo\Serie1\src\main\java\Mac-then-encrypt-object-oriented" />
       <recent name="D:\Isel\1920i\Segurança Informatica\isel-leic-si-series\Serie1\Repo\Serie1\src\main\java\Mac-then-encrypt" />
       <recent name="D:\Isel\1920i\Segurança Informatica\isel-leic-si-series\Serie1\Repo\Serie1\src\test" />
@@ -275,7 +366,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1569525258552</updated>
-      <workItem from="1569525261218" duration="5144000" />
+      <workItem from="1569525261218" duration="11913000" />
     </task>
     <servers />
   </component>
@@ -285,70 +376,50 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5144000" />
+    <option name="totallyTimeSpent" value="11913000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-1927" y="-320" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Designer" />
-      <window_info id="Image Layers" />
-      <window_info id="Capture Tool" />
-      <window_info id="UI Designer" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24130106" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Build" weight="0.3289689" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" weight="0.3289689" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3289689" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Maven" />
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Gradle" />
-      <window_info anchor="right" id="Database" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info id="Image Layers" order="0" />
+      <window_info id="Capture Tool" order="1" />
+      <window_info id="UI Designer" order="2" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info id="Designer" order="4" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.21409395" />
+      <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Duplicate detector" weight="0.3286119" />
+      <window_info anchor="bottom" id="Terminal" order="0" />
+      <window_info anchor="bottom" id="Docker" order="1" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="3" weight="0.3289689" />
+      <window_info anchor="bottom" id="Database Changes" order="4" />
+      <window_info anchor="bottom" id="Version Control" order="5" />
+      <window_info anchor="bottom" id="Build" order="6" weight="0.3289689" />
+      <window_info anchor="bottom" id="Message" order="7" />
+      <window_info anchor="bottom" id="Find" order="8" weight="0.3286119" />
+      <window_info anchor="bottom" id="Run" order="9" weight="0.3289689" />
+      <window_info anchor="bottom" id="Debug" order="10" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="11" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="12" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="13" />
+      <window_info anchor="right" id="Palette" order="0" />
+      <window_info anchor="right" id="Capture Analysis" order="1" />
+      <window_info anchor="right" id="Gradle" order="2" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="right" id="Palette&#9;" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Maven" order="6" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="7" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="8" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="9" weight="0.25" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/ArrayUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/mac/MarkProducer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="27" selection-start-column="27" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/mac/Verifier.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="27" selection-start-column="27" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Serie1/src/test/java/MacThenEncryptObjectOrientedTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -373,20 +444,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Encrypter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Serie1/build.gradle">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -400,20 +457,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/model/MacAndMark.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/model/KeyIVAndMsg.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/jre/lib/jce.jar!/javax/crypto/Cipher.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -421,37 +464,213 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/mac/Mark.java">
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/ArrayUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        <state relative-caret-position="68">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/MacThenEncrypt.java">
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Decrypter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-335">
-          <caret line="24" column="49" selection-start-line="24" selection-start-column="45" selection-end-line="24" selection-end-column="49" />
+        <state relative-caret-position="119">
+          <caret line="7" column="45" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Encrypter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="8" lean-forward="true" selection-start-line="7" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/jre/lib/jce.jar!/javax/crypto/KeyGenerator.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1428">
+          <caret line="243" column="27" selection-start-line="243" selection-start-column="27" selection-end-line="243" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/io/Serializable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1389">
+          <caret line="168" column="17" selection-start-line="168" selection-start-column="17" selection-end-line="168" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/util/Random.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="76" column="38" lean-forward="true" selection-start-line="76" selection-start-column="38" selection-end-line="76" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/jre/lib/jce.jar!/javax/crypto/SecretKey.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/model/KeyIVAndMsg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Exceptions/DecryptionException.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/security/InvalidAlgorithmParameterException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="40" column="32" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/jre/lib/jce.jar!/javax/crypto/spec/IvParameterSpec.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Abstractions/Mac.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="70" selection-start-line="6" selection-start-column="70" selection-end-line="6" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/mac/Abstractions/Cipher.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Mac/Verifier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/CipherImp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/MacThenEncrypt.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/jre/lib/jce.jar!/javax/crypto/Mac.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        <state relative-caret-position="102">
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Decrypter.java">
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/Abstractions/Cipher.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        <state relative-caret-position="136">
+          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
           <folding>
-            <element signature="e#147#148#0" expanded="true" />
-            <element signature="e#192#193#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/CipherMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="22" lean-forward="true" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/MacThenEncryptResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+          <folding>
+            <element signature="e#354#355#0" expanded="true" />
+            <element signature="e#390#391#0" expanded="true" />
+            <element signature="e#425#426#0" expanded="true" />
+            <element signature="e#456#457#0" expanded="true" />
+            <element signature="e#563#564#0" expanded="true" />
+            <element signature="e#589#590#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/model/MacAndMark.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Mac/Abstractions/Mac.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/MacThenEncrypt.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="45" column="40" selection-start-line="45" selection-start-column="19" selection-end-line="45" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/AuthMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+          <folding>
+            <element signature="e#320#321#0" expanded="true" />
+            <element signature="e#346#347#0" expanded="true" />
+            <element signature="e#381#382#0" expanded="true" />
+            <element signature="e#411#412#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Mac/MacImp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Mac/MarkProducer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#580#581#0" expanded="true" />
+            <element signature="e#629#630#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/MacThenEncrypt.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="27" column="40" selection-start-line="27" selection-start-column="40" selection-end-line="27" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
