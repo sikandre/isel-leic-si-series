@@ -1,6 +1,5 @@
 package MacThenEncryptJCA.cipher;
 
-import MacThenEncrypt.model.KeyIVAndMsg;
 import MacThenEncryptJCA.Model.CipherMessage;
 import MacThenEncryptJCA.cipher.Abstractions.Cipher;
 

@@ -18,14 +18,19 @@ public class MacImp implements Mac {
         javax.crypto.Mac mac = javax.crypto.Mac.getInstance("HmacSHA256");
         mac.init(key);
         byte[] mark = mac.doFinal(message);
-        return new AuthMessage(addAll(mark, message), mac);
+        return new AuthMessage(addAll(message, mark), mac, mark.length);
     }
 
     @Override
     public boolean verify(MacThenEncryptResponse macResponse, byte[] msg) {
         javax.crypto.Mac mac = macResponse.getMac();
         byte[] verify = mac.doFinal(msg);
-        return Arrays.equals(verify,macResponse.getAuthMark());
+        byte[] authMark = getAuthMark(macResponse.getAuthMarkLen(), verify);
+        return Arrays.equals(verify, authMark);
+    }
+
+    private byte[] getAuthMark(int markLength, byte[] verify) {
+        return Arrays.copyOfRange(verify, verify.length-markLength, verify.length);
     }
 
     public static byte[] addAll(final byte[] array1, byte[] array2) {

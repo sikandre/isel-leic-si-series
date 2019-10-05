@@ -196,7 +196,7 @@ Neste trabalho prático pretendemos responder aos vários exercícios propostos 
 Ambos os esquemas criptográficos visam garantir a autenticidade da mensagem adicionando à própria mensagem um numero de bits de forma a identificar o emissor da mesma, no caso do MAC uma marca ou uma assinatura no caso da assinatura digital, sendo essa autenticidade verificada no recetor. Ambos os esquemas utilizam chaves privadas para "marcar" \space a mensagem, sendo que no caso da assinatura digital é usado uma chave publica para autenticar essa mesma mensagem, já no esquema MAC é usada a chave privada do emissor.\\
 
 \subsection{Exercício 2}
-A função de hash obriga a uma mensagem de tamanho variável $ m $ para uma redução da mesma de tamanho $ n $ ou seja, a dimensão do $ yL = $ dimensão de $ m1 $, logo $ n $ bits $ = $ dimensão de um bloco "shiftado"\space da dimensão da mensagem, pelo que existe $ m $ e $ m' $, tal que $ H(m) = H(m')$.\\
+Como se pode observar pela fig.1 independente do tamanho da mensagem um atacante consegue através de tentativas computacionalmente fazíveis obter uma mesma função de hash alterando apenas os dois últimos blocos, pois a função apenas depende desses blocos ignorando todos os anteriores.
 
 \subsection{Exercício 3}
 Um algoritmo de cifra determinístico indica que a cifra de uma mensagem pode se repetir, ou seja, caso a mensagem seja um padrão a cifra irá se repetir também, logo o atacante tendo acesso à cifra e à chave publica pode através de força bruta repetir uma mensagem até encontrar a cifra, pois se for igual aquela que o atacante então a mensagem é equivalente à original.\\

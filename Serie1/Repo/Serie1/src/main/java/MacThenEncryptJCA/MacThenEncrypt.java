@@ -6,16 +6,16 @@ import MacThenEncryptJCA.Model.AuthMessage;
 import MacThenEncryptJCA.Model.MacThenEncryptResponse;
 import MacThenEncryptJCA.cipher.Abstractions.Cipher;
 import MacThenEncryptJCA.cipher.CipherImp;
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 public class MacThenEncrypt {
 
-    public static MacThenEncryptResponse macThenEncrypt(String txt) throws GeneralSecurityException {
-        byte[] originalMsg = "The quick brown fox jumps over the lazy dog".getBytes(UTF_8);
+    public static MacThenEncryptResponse macThenEncrypt(String msg) throws GeneralSecurityException {
+        byte[] originalMsg = msg.getBytes(UTF_8);
 
         //authenticate
         Mac mac = new MacImp();
@@ -25,7 +25,7 @@ public class MacThenEncrypt {
         //cipher
         String cipherAlgorithm = "AES/CBC/PKCS5Padding";
         Cipher cipher = new CipherImp();
-        return new MacThenEncryptResponse(cipher.encryptUsingAES(authMessage.msg, cipherAlgorithm), authMessage.getMac());
+        return new MacThenEncryptResponse(cipher.encryptUsingAES(authMessage.msg, cipherAlgorithm), authMessage.getMac(), authMessage.getAuthMarkLen());
     }
 
     public static boolean DecriptThenAuthenticate(MacThenEncryptResponse cipherMessage) throws GeneralSecurityException {
