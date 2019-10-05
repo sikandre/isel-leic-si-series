@@ -1,8 +1,8 @@
 import cipher.Decrypter;
 import cipher.Encrypter;
 import cipher.Message;
-import mac.Mark;
-import mac.MarkProducer;
+import mac.Tag;
+import mac.TagProducer;
 import mac.Verifier;
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +18,8 @@ class MacThenEncryptTest {
     @Test
     public void shouldMacThenEncryptObjectOriented() throws InvalidKeyException, NoSuchAlgorithmException {
         byte[] msg = "The quick brown fox jumps over the lazy dog".getBytes(UTF_8);
-        MarkProducer mp = new MarkProducer("HmacSHA256");
-        Mark m = mp.produceMark(msg);
+        TagProducer mp = new TagProducer("HmacSHA256");
+        Tag m = mp.produceMark(msg);
 
         Encrypter enc = new Encrypter("AES/CBC/PKCS5Padding");
         byte[] msgEncrypted = enc.encrypt(ArrayUtils.addAll(msg,m.mark));

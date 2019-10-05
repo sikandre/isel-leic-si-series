@@ -193,17 +193,40 @@ Neste trabalho prático pretendemos responder aos vários exercícios propostos 
 \section{Primeira série de exercícios}
 \subsection{Exercício 1}
 
-Ambos os esquemas criptográficos visam garantir a autenticidade da mensagem adicionando à própria mensagem um numero de bits de forma a identificar o emissor da mesma, no caso do MAC uma marca ou uma assinatura no caso da assinatura digital, sendo essa autenticidade verificada no recetor. Ambos os esquemas utilizam chaves privadas para "marcar" \space a mensagem, sendo que no caso da assinatura digital é usado uma chave publica para autenticar essa mesma mensagem, já no esquema MAC é usada a chave privada do emissor.\\
+Ambos os esquemas criptográficos visam garantir a autenticidade da mensagem adicionando à própria mensagem um numero de bits de forma a identificar o emissor da mesma, no caso do MAC uma marca ou uma assinatura no caso da assinatura digital, sendo essa autenticidade verificada no recetor. Ambos os esquemas utilizam chaves privadas para "marcar" \space a mensagem, sendo que no caso da assinatura digital é usado uma chave publica para autenticar essa mesma mensagem, já no esquema MAC é usada uma chave simétrica.\\
 
 \subsection{Exercício 2}
-A função de hash obriga a uma mensagem de tamanho variável $ m $ para uma redução da mesma de tamanho $ n $ ou seja, a dimensão do $ yL = $ dimensão de $ m1 $, logo $ n $ bits $ = $ dimensão de um bloco "shiftado"\space da dimensão da mensagem, pelo que existe $ m $ e $ m' $, tal que $ H(m) = H(m')$.\\
+A organização da função de hash reduz uma mensagem de tamanho variável $ m $ a um bloco de tamanho $ n $ ou seja, a dimensão de $ yL = $ dimensão de $ m1 $, logo $ n $ bits $ = $ dimensão de um bloco <<<\space dimensão da mensagem, pelo que existe $ m $ e $ m' $, tal que $ H(m) = H(m')$. O diagrama seguinte pretende ilustrar a organização da aplicação da primitiva de cifra, conforme explicitado:\\
 
 \subsection{Exercício 3}
-Um algoritmo de cifra determinístico indica que a cifra de uma mensagem pode se repetir, ou seja, caso a mensagem seja um padrão a cifra irá se repetir também, logo o atacante tendo acesso à cifra e à chave publica pode através de força bruta repetir uma mensagem até encontrar a cifra, pois se for igual aquela que o atacante então a mensagem é equivalente à original.\\
+Apesar de não ter acesso ao texto em claro, o que facilitaria o ataque, o atacante tem acesso ao texto cifrado. Sabendo que os mesmos blocos de texto em claro produzem as mesmas cifras, então um oráculo de encriptação pode ser usado. Se o atacante pode submeter texto em claro para encriptação, então também pode verificar hipóteses sobre o texto em claro que corresponde ao texto cifrado.\\
 
 \subsection{Exercício 4}
-Analisando os dois tipos de esquemas seria expectável que a primitiva AES é sempre mais dificil de criptoanalizar que um sistema com primitiva DES, no entanto essa analise tem de ser feita também relativamente ao modo de operação que cada uma pode usar, como por exemplo no caso especifico de um sistema AES ter usado um modo de operação ECB (Electronic Code Book) e a sua mensagem ser de alguma forma curta e padronizada pode mais facilmente ser quebrada que uma DES que usou o mode de operação CBC (Cipher Block Chain).
+Comparando os dois esquemas seria expectável que a primitiva AES fosse em todos os casos mais dificil de criptoanalizar que um sistema com primitiva DES, no entanto essa analise tem de ser feita também relativamente ao modo de operação que cada uma pode usar, como por exemplo no caso especifico de um sistema AES ter usado um modo de operação ECB (Electronic Code Book) e a sua mensagem ser de alguma forma curta e padronizada pode mais facilmente ser quebrada que uma DES que usou o mode de operação CBC (Cipher Block Chain).\\
 
+\subsection{Exercício 5}
+A JCA contem uma arquitectura baseada em providers e uma série de APIs para assinaturas digitais, hashes, certificados e a sua validação, encriptação, geração e gestão de chaves. Essas APIs permitem integrar segurança facilmente no código.
+Uma engine class fornece a interface para um serviço criptográfico especifico, ficando independente de um algoritmo criptografico particular ou de um provider. As engine classes fornecem operações criptograficas ou geradores ou conversores de material criptografico, ou objectos que encapsulam dados criptograficos e podem ser usados em niveis mais elevados de abstração.
+Esta opção de arquitectura privilegia a independencia de implementação e a interoperabilidade, já que as aplicações não precisam de implementar algoritmos de segurança e os providers são interoperáveis em relação às aplicações.\\
+
+\subsection{Exercício 6.1}
+Um certificado é composto pelo seu corpo (campos, extensões e propriedades) e por uma assinatura. A verificação da assinatura permite atestar da autenticidade da mensagem.
+Como o processo de verificação da autenticidade calcula um hash do corpo do certificado, não deve ser possível que mensagens diferentes produzam o mesmo hash (2ª pré-imagem), o que significaria que um certificado podia ser alterado no seu corpo ( por exemplo, no seu emissor ou chave pública) e a verificação da assinatura retornar true.\\
+
+\subsection{Exercício 6.2}
+Para validar a assinatura do certificado C são usados o seu corpo, a assinatura presentes no certificado e a chave pública do emissor. Para validar os outros certificados intermédios na cadeia de certificação são usados os mesmos elementos. Para validar a assinatura do certificado raíz, é usada a sua chave pública, uma vez que nesse caso o certificado é assinado pelo emissor (auto-assinado). Portanto, nenhuma chave privada é usada para na validação de certificados X.509.\\
+
+\subsection{Exercício 7}
+A fazer ...\\
+
+\subsection{Exercício 8.1}
+A função de decifra e verificação é dada por: T(k2)(D(k1)(c)||t). Ou seja, aplicando a primitiva de decifra ao criptograma, e de seguida verificando a assinatura contra a mensagem e a marca.\\
+
+\subsection{Exercício 8.2}
+Foi implementada a aplicação Mac-then-encrypt usando a JCA.\\
+
+\subsection{Exercício 9}
+A fazer ... \\
 \newpage
 
 
