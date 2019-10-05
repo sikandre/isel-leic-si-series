@@ -2,22 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="78b7d955-d111-4b18-8cae-b4896c9015b0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Serie1/src/test/java/MacThenEncryptJCA/MacThenEncryptTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Entrega/Relatorio/fase1.tex" beforeDir="false" afterPath="$PROJECT_DIR$/../Entrega/Relatorio/fase1.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/Exceptions/DecryptionException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/MacThenEncrypt.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/model/KeyIVAndMsg.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncrypt/model/MacAndMark.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Mac/MacImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Mac/MacImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/MacThenEncrypt.java" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/MacThenEncrypt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/AuthMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/AuthMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/MacThenEncryptResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/MacThenEncryptResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/CipherImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/cipher/CipherImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Serie1/src/test/java/MacThenEncryptObjectOrientedTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Serie1/src/test/java/MacThenEncryptTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Serie1/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Serie1/src/test/java/MacThenEncryptJCA/MacThenEncryptTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/test/java/MacThenEncryptJCA/MacThenEncryptTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Serie1/src/test/test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/test/test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,7 +52,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/settings.gradle" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
@@ -95,7 +87,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.MacThenEncryptTest">
+  <component name="RunManager" selected="JUnit.MacThenEncryptTest.macThenEncrypt">
     <configuration name="MacThenEncryptTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -145,8 +137,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MacThenEncryptTest.macThenEncrypt" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="MacThenEncryptJCA.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="MacThenEncryptJCA" />
+      <option name="MAIN_CLASS_NAME" value="MacThenEncryptJCA.MacThenEncryptTest" />
+      <option name="METHOD_NAME" value="macThenEncrypt" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.MacThenEncryptTest.macThenEncrypt" />
         <item itemvalue="Gradle.MacThenEncryptTest" />
         <item itemvalue="Gradle.MacThenEncryptTest.macThenEncrypt" />
         <item itemvalue="JUnit.MacThenEncryptTest" />
@@ -166,6 +175,7 @@
       <workItem from="1569525261218" duration="15543000" />
       <workItem from="1570221735843" duration="43000" />
       <workItem from="1570221823782" duration="4206000" />
+      <workItem from="1570310053334" duration="329000" />
     </task>
     <servers />
   </component>
@@ -200,7 +210,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Serie1/src/test/java/MacThenEncryptJCA/MacThenEncryptTest.java</url>
-          <line>11</line>
+          <line>13</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

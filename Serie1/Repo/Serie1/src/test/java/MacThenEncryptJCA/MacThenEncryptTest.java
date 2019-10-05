@@ -3,7 +3,7 @@ import MacThenEncryptJCA.Model.MacThenEncryptResponse;
 import org.junit.Test;
 import java.security.GeneralSecurityException;
 
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.assertTrue;
 
 public class MacThenEncryptTest {
 
@@ -12,7 +12,6 @@ public class MacThenEncryptTest {
         String message = "The quick brown fox jumps over the lazy dog";
         try {
             MacThenEncryptResponse response = MacThenEncrypt.macThenEncrypt(message);
-
             assertTrue(MacThenEncrypt.DecriptThenAuthenticate(response));
 
         } catch (GeneralSecurityException e) {
