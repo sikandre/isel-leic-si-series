@@ -1,9 +1,9 @@
 package mac;
 
-public class Mark {
+public class Tag {
     public byte[] mark;
 
-    public Mark(byte[] mark) {
+    public Tag(byte[] mark) {
         this.mark = mark;
     }
 }

@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="78b7d955-d111-4b18-8cae-b4896c9015b0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Serie1/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/build.gradle" afterDir="false" />
+    <list default="true" id="78b7d955-d111-4b18-8cae-b4896c9015b0" name="Default Changelist" comment="" />
+      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Mac/MacImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Mac/MacImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/MacThenEncrypt.java" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/MacThenEncrypt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/AuthMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/AuthMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/MacThenEncryptResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/main/java/MacThenEncryptJCA/Model/MacThenEncryptResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Serie1/src/test/java/MacThenEncryptJCA/MacThenEncryptTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/test/java/MacThenEncryptJCA/MacThenEncryptTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Serie1/src/test/test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Serie1/src/test/test.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -35,7 +37,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectId" id="1Rkr3HIiNh9U6ztH949pu7guVpw" />
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  <component name="ProjectId" id="1RgugEJT7DmCHzuxNpsAF2ft5Dy" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="Downloaded.Files.Path.Enabled" value="false" />
@@ -49,7 +53,6 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/Serie1/src/main/java" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/settings.gradle" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Libraries" />
@@ -173,7 +176,6 @@
       <option name="presentableId" value="Default" />
       <updated>1569525258552</updated>
       <workItem from="1569525261218" duration="15543000" />
-      <workItem from="1570221735843" duration="43000" />
       <workItem from="1570221823782" duration="4206000" />
       <workItem from="1570310053334" duration="329000" />
     </task>
@@ -187,12 +189,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
-          </value>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
         </entry>
       </map>
+    </option>
     </option>
   </component>
   <component name="XDebuggerManager">

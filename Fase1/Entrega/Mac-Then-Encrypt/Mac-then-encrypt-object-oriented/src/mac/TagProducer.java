@@ -6,9 +6,9 @@ import javax.crypto.SecretKey;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-public class MarkProducer {
+public class TagProducer {
     public Mac mac;
-    public MarkProducer(String algorithm) throws NoSuchAlgorithmException, InvalidKeyException {
+    public TagProducer(String algorithm) throws NoSuchAlgorithmException, InvalidKeyException {
         KeyGenerator kg = KeyGenerator.getInstance(algorithm);
         SecretKey k2 = kg.generateKey();
         Mac mac = Mac.getInstance("HmacSHA256");
@@ -16,7 +16,7 @@ public class MarkProducer {
 
     }
 
-    public Mark produceMark(byte[] msg) {
-        return new Mark(mac.doFinal(msg));
+    public Tag produceMark(byte[] msg) {
+        return new Tag(mac.doFinal(msg));
     }
 }
