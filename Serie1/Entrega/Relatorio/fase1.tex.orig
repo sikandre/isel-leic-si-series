@@ -196,7 +196,11 @@ Neste trabalho prático pretendemos responder aos vários exercícios propostos 
 Ambos os esquemas criptográficos visam garantir a autenticidade da mensagem adicionando à própria mensagem um numero de bits de forma a identificar o emissor da mesma, no caso do MAC uma marca ou uma assinatura no caso da assinatura digital, sendo essa autenticidade verificada no recetor. Ambos os esquemas utilizam chaves privadas para "marcar" \space a mensagem, sendo que no caso da assinatura digital é usado uma chave publica para autenticar essa mesma mensagem, já no esquema MAC é usada uma chave simétrica.\\
 
 \subsection{Exercício 2}
+<<<<<<< HEAD
+Como se pode observar pela fig.1 independente do tamanho da mensagem um atacante consegue através de tentativas computacionalmente fazíveis obter uma mesma função de hash alterando apenas os dois últimos blocos, pois a função apenas depende desses blocos ignorando todos os anteriores.
+=======
 A organização da função de hash reduz uma mensagem de tamanho variável $ m $ a um bloco de tamanho $ n $ ou seja, a dimensão de $ yL = $ dimensão de $ m1 $, logo $ n $ bits $ = $ dimensão de um bloco <<<\space dimensão da mensagem, pelo que existe $ m $ e $ m' $, tal que $ H(m) = H(m')$. O diagrama seguinte pretende ilustrar a organização da aplicação da primitiva de cifra, conforme explicitado:\\
+>>>>>>> 1f50dc500b5d352b2eb40fd92180f8bf2b945368
 
 \subsection{Exercício 3}
 Apesar de não ter acesso ao texto em claro, o que facilitaria o ataque, o atacante tem acesso ao texto cifrado. Sabendo que os mesmos blocos de texto em claro produzem as mesmas cifras, então um oráculo de encriptação pode ser usado. Se o atacante pode submeter texto em claro para encriptação, então também pode verificar hipóteses sobre o texto em claro que corresponde ao texto cifrado.\\
@@ -217,18 +221,7 @@ Como o processo de verificação da autenticidade calcula um hash do corpo do ce
 Para validar a assinatura do certificado C são usados o seu corpo, a assinatura presentes no certificado e a chave pública do emissor. Para validar os outros certificados intermédios na cadeia de certificação são usados os mesmos elementos. Para validar a assinatura do certificado raíz, é usada a sua chave pública, uma vez que nesse caso o certificado é assinado pelo emissor (auto-assinado). Portanto, nenhuma chave privada é usada para na validação de certificados X.509.\\
 
 \subsection{Exercício 7}
-Para este exercício foram realizadas experiências segundo o \textit{Labs for Security Eduction}.\\
-Na alnea 1 do ponto \emph{"2.4 Task 4: Padding"} foram testadas os modos propostos e é possivel concluir que ECB e CBF, ambos usam \textit{padding}, ao contrário dos modos CFB e OFB.\\
-Para determinar o uso de \textit{padding} nos varios modos foi usado um ficheiro de 5 \textit{bytes} e depois foi feita a sua decifra usando o comando \textit{nopad} e também um \textit{hexdump} para verificar o seu conteúdo. Foi também possível verificar que o tamanho do ficheiro no caso dos modos que usam \textit{padding} era sempre uma potência de base 2.\\
-
-Na alínea 2 exercício usando a \textit{-aes-128-cbc} para encriptar os 3 ficheiros propostos foi possível reparar que os ficheiros todos os ficheiros tiveram \textit{padding}. O de 5 e o de 10 \textit{bytes} tiveram um preenchimento de \textit{padding} até aos 16  \textit{bytes}, sendo que o de 16 ao ser cifrado obtinha o seu preenchimento completo então levou mais 16 \textit{bytes} de \textit{padding}.\\ 
-Os valores de preenchimento pode ser verificados com o \textit{hexdump} dos três ficheiros.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.5]{img/padding}
-	\caption{hexdump on files}
-\end{figure}
+A fazer ...\\
 
 \subsection{Exercício 8.1}
 A função de decifra e verificação é dada por: T(k2)(D(k1)(c)||t). Ou seja, aplicando a primitiva de decifra ao criptograma, e de seguida verificando a assinatura contra a mensagem e a marca.\\
