@@ -1,3 +1,4 @@
-rootProject.name = 'Repo'
 
 include 'Serie1'
+
+rootProject.name = 'Serie1'
