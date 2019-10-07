@@ -32,7 +32,7 @@ o certicado do destinatario e produz i) cheiro com mensagem cifrada (Cf ); ii
 diferentes, em combinac~ao com o algoritmo assimetrico RSA. Use o material criptograco presente no
 anexo certificates-keys.zip
 * */
-public class HybridSchemeCipher {
+public class HybridSchemeApp {
 
     public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, IOException, UnrecoverableKeyException, KeyStoreException, CertificateException {
         Configs configs = new Configs(args);
