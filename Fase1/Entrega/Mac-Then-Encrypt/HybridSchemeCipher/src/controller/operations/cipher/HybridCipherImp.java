@@ -3,19 +3,24 @@ package controller.operations.cipher;
 import controller.Configs;
 import controller.operations.HybridScheme;
 import model.Metadata;
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.security.*;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
+import java.security.cert.*;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class HybridCipherImp extends HybridScheme {
 
+    private static Logger log = LoggerFactory.getLogger(HybridCipherImp.class);
     private static final int INITIAL_VECTOR_SIZE = 16;
 
     private final byte[] initialVector;
@@ -24,8 +29,9 @@ public class HybridCipherImp extends HybridScheme {
 
     public HybridCipherImp(Configs configs) throws NoSuchAlgorithmException, IOException {
         super(configs);
-        message = Files.readAllBytes(confs.getSourceFilePath());
-        KeyGenerator kg = KeyGenerator.getInstance(confs.getSymetricalAlgorithm());
+        message = getBytesFromResources(confs.getSourceFileName());
+        //TODO corrigir
+        KeyGenerator kg = KeyGenerator.getInstance(confs.getSymetricalAlgorithm().split("/")[0]);
         symetricalKey = kg.generateKey();
         initialVector = new byte[INITIAL_VECTOR_SIZE];
         new Random().nextBytes(initialVector);
@@ -42,26 +48,32 @@ public class HybridCipherImp extends HybridScheme {
             Files.write(confs.getMetadataFilePath(), metadata.toByteArray());
         }
         catch (NoSuchAlgorithmException e){
-            e.printStackTrace();
+            log.error(e.getMessage());
         }catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         } catch (InvalidKeyException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         } catch (InvalidAlgorithmParameterException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         } catch (BadPaddingException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
-
+    private byte[] getBytesFromResources(String sourceFileName) {
+        byte[] bytes = new byte[0];
+        try {
+            bytes = IOUtils.toByteArray(Thread.currentThread().getContextClassLoader().getResourceAsStream(sourceFileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bytes;
+    }
     private byte[] cipherSymKeyWithPublicKeyAndGetCipheredSymetricalKey(PublicKey destinationPublicKey) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
-        char[] pw = {'c','h','a','n','g','e','i','t'};
-
         // cipher key with destination public key
         Cipher asymetricalCipher = Cipher.getInstance(confs.getAsymetricalAlgorithm());
         asymetricalCipher.init(Cipher.WRAP_MODE, destinationPublicKey);
@@ -70,7 +82,7 @@ public class HybridCipherImp extends HybridScheme {
 
     private PublicKey validateCertificateAndGetPublicKey() {
         X509Certificate certificate = getCertificateFile(confs.getCertificateFilePath());
-        validateCertificate(certificate);
+        validateCertificate(confs.getCertificateFilePath());
         return certificate.getPublicKey();
     }
 
@@ -86,17 +98,74 @@ public class HybridCipherImp extends HybridScheme {
     }
 
     // TODO implement certification chain validation
-    private boolean validateCertificate(Certificate certificate) {
-        return false;
+    private boolean validateCertificate(String certificatePath) {
+        try {
+            char [] pw = {'c','h','a','n','g','e','i','t'};
+            KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+            URL resource = Thread.currentThread().getContextClassLoader().getResource("ks.jks");
+            File file = new File(resource.toURI());
+            ks.load(new FileInputStream(file), pw);
+
+            CertPathBuilder cpb = CertPathBuilder.getInstance("PKIX");
+            X509Certificate cert = getCertificateFile(certificatePath);
+            X509CertSelector selector = new X509CertSelector();
+            selector.setCertificate(cert);
+            CertPathParameters xparams = new PKIXBuilderParameters(ks,selector);
+            // TODO where cs integrates with selector and keystore ???
+            CertStore cs = getCertStore(certificatePath);
+
+            cpb.build(xparams);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return false;
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+            return false;
+        } catch (CertPathBuilderException e) {
+            e.printStackTrace();
+            return false;
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+            return false;
+        } catch (CertificateException e) {
+            e.printStackTrace();
+            return false;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    private CertStore getCertStore(String certificatePath) throws InvalidAlgorithmParameterException, NoSuchAlgorithmException {
+        LinkedList<X509Certificate> chain = new LinkedList<>();
+        X509Certificate curr = getCertificateFile(certificatePath);
+        chain.add(curr);
+        while(!curr.getSubjectDN().getName().equals(curr.getIssuerDN().getName())) {
+            String name = curr.getIssuerDN().getName().split(",")[0].split("=")[1];
+            curr = getCertificateFile(name+".cer");
+            chain.add(curr);
+        }
+        CollectionCertStoreParameters ccsp = new CollectionCertStoreParameters(chain);
+        return CertStore.getInstance("Collection",ccsp);
     }
 
     private X509Certificate getCertificateFile(String certificate) {
         X509Certificate cer = null;
         try {
             CertificateFactory fact = CertificateFactory.getInstance("X.509");
-            FileInputStream fis = new FileInputStream("Serie1/src/main/resources/" + certificate);
+            URL resource = Thread.currentThread().getContextClassLoader().getResource(certificate);
+            File file = new File(resource.toURI());
+            FileInputStream fis = new FileInputStream(file);
             cer = (X509Certificate) fact.generateCertificate(fis);
-        } catch (Exception e) {
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
         return cer;
