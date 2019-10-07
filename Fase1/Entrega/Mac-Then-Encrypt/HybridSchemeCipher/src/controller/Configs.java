@@ -1,5 +1,8 @@
 package controller;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class Configs {
     public static final String CIPHER = "Cipher";
     public static final String DECIPHER = "Decipher";
@@ -7,23 +10,24 @@ public class Configs {
     private final String[] args;
 
     // Configs
-    private String fn;
+    private Path fn;
     private String op;
-    private String cmfn;
-    private String metadataFn;
-    private String dpKeyFn;
+    private String destinationCertificateFilePath;
+    private Path metadataFilePath;
+    private Path destinationPrivateKeyFileName;
 
     public Configs(String[] args){
+        if(args.length < 4) throw new UnsupportedOperationException();
         this.args = args;
     }
 
     public void parse(){
-        this.fn = args[0];
+        this.fn = Paths.get(args[0]);
         this.op = operation(args[1]);
-        cmfn = args[2];
-        metadataFn = args[3];
+        this.destinationCertificateFilePath = args[2];
+        this.metadataFilePath = Paths.get(args[3]);
         if (op.equals(DECIPHER)) {
-            dpKeyFn = args[4];
+            this.destinationPrivateKeyFileName = Paths.get(args[4]);
         }
     }
 
@@ -37,5 +41,26 @@ public class Configs {
 
     public String getOperation() {
         return this.op;
+    }
+    public Path getSourceFilePath(){return this.fn;}
+
+    public Path getDestinationFilePath() {
+        return this.metadataFilePath;
+    }
+
+    public Path getMetadataFilePath() {
+        return this.metadataFilePath;
+    }
+
+    public String getCertificateFilePath() {
+        return this.destinationCertificateFilePath;
+    }
+
+    public String getAsymetricalAlgorithm() {
+        return "";
+    }
+
+    public String getSymetricalAlgorithm() {
+        return "";
     }
 }

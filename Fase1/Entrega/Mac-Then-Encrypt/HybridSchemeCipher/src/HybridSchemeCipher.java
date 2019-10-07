@@ -3,6 +3,13 @@ import controller.operations.HybridScheme;
 import controller.operations.CriptographicOperation;
 import utils.time.TimeOutHolder;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.io.IOException;
+import java.security.*;
+import java.security.cert.CertificateException;
+
 /*
 * Usando a JCA realize uma aplicac~ao para cifrar e decifrar cheiros usando um esquema hbrido. Este tipo
 de esquema usa cifra assimetrica para transportar uma chave simetrica (gerada pela aplicac~ao) que cifra
@@ -27,16 +34,16 @@ anexo certificates-keys.zip
 * */
 public class HybridSchemeCipher {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, IOException, UnrecoverableKeyException, KeyStoreException, CertificateException {
         Configs configs = new Configs(args);
         configs.parse();
 
         TimeOutHolder th = new TimeOutHolder();
-        CriptographicOperation op = HybridScheme.getInstance(configs);
+        HybridScheme hs = HybridScheme.getInstance(configs);
 
         th.start();
 
-        op.run();
+        hs.encryptDecrypt();
 
         th.end();
         th.printElapsed();

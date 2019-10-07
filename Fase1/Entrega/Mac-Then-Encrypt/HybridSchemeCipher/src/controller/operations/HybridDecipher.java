@@ -8,7 +8,7 @@ public class HybridDecipher extends HybridScheme {
     }
 
     @Override
-    public void run() {
+    public void encryptDecrypt() {
 
     }
 }
