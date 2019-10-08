@@ -101,20 +101,21 @@ public class HybridCipherImp extends HybridScheme {
     private boolean validateCertificate(String certificatePath) {
         try {
             char [] pw = {'c','h','a','n','g','e','i','t'};
-            KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
-            URL resource = Thread.currentThread().getContextClassLoader().getResource("ks.jks");
-            File file = new File(resource.toURI());
-            ks.load(new FileInputStream(file), pw);
+            KeyStore ks = getKeyStore("ks.jks",pw);
 
-            CertPathBuilder cpb = CertPathBuilder.getInstance("PKIX");
             X509Certificate cert = getCertificateFile(certificatePath);
+
             X509CertSelector selector = new X509CertSelector();
             selector.setCertificate(cert);
-            CertPathParameters xparams = new PKIXBuilderParameters(ks,selector);
-            // TODO where cs integrates with selector and keystore ???
-            CertStore cs = getCertStore(certificatePath);
 
+            CertStore cs = getCertStore(cert);
+
+            PKIXBuilderParameters xparams = new PKIXBuilderParameters(ks,selector);
+            xparams.addCertStore(cs);
+
+            CertPathBuilder cpb = CertPathBuilder.getInstance("PKIX");
             cpb.build(xparams);
+
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             return false;
@@ -132,23 +133,34 @@ public class HybridCipherImp extends HybridScheme {
             return false;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            return false;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         } catch (URISyntaxException e) {
             e.printStackTrace();
+            return false;
         }
         return true;
     }
 
-    private CertStore getCertStore(String certificatePath) throws InvalidAlgorithmParameterException, NoSuchAlgorithmException {
+    private KeyStore getKeyStore(String ksName, char[] pw) throws KeyStoreException, URISyntaxException, IOException, CertificateException, NoSuchAlgorithmException {
+        KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+        URL resource = Thread.currentThread().getContextClassLoader().getResource(ksName);
+        File file = new File(resource.toURI());
+        ks.load(new FileInputStream(file), pw);
+        return ks;
+    }
+
+    private CertStore getCertStore(X509Certificate endCertificate) throws InvalidAlgorithmParameterException, NoSuchAlgorithmException {
         LinkedList<X509Certificate> chain = new LinkedList<>();
-        X509Certificate curr = getCertificateFile(certificatePath);
-        chain.add(curr);
+        X509Certificate curr = endCertificate;
         while(!curr.getSubjectDN().getName().equals(curr.getIssuerDN().getName())) {
+            chain.add(curr);
             String name = curr.getIssuerDN().getName().split(",")[0].split("=")[1];
             curr = getCertificateFile(name+".cer");
-            chain.add(curr);
         }
+        chain.add(curr);
         CollectionCertStoreParameters ccsp = new CollectionCertStoreParameters(chain);
         return CertStore.getInstance("Collection",ccsp);
     }
