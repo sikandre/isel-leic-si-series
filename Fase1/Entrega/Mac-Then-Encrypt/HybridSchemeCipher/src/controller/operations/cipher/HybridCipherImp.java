@@ -111,6 +111,7 @@ public class HybridCipherImp extends HybridScheme {
             CertStore cs = getCertStore(cert);
 
             PKIXBuilderParameters xparams = new PKIXBuilderParameters(ks,selector);
+            xparams.setRevocationEnabled(false);
             xparams.addCertStore(cs);
 
             CertPathBuilder cpb = CertPathBuilder.getInstance("PKIX");
