@@ -4,8 +4,6 @@ import HybridScheme.Models.InputArgs;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class CustomCipherImpTest {
 
     @Test
@@ -16,13 +14,11 @@ public class CustomCipherImpTest {
                 "cert-CA/CA1.cer",
                 false,
                 null,
+                null,
                 null);
 
         CustomCipher cipher = new CustomCipherImp(inputArgs);
-
         boolean result = cipher.CipherMessage();
-
         Assert.assertTrue(result);
-
     }
 }

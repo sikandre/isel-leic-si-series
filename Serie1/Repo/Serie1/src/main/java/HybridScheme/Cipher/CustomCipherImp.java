@@ -27,12 +27,8 @@ public class CustomCipherImp implements CustomCipher {
     private byte[] originalFile;
     private X509Certificate certificate;
     private Metadata metadata;
-    private byte[] cipherMessage;
-
-    private InputArgs inputArgs;
 
     public CustomCipherImp(InputArgs inputArgs) {
-        this.inputArgs = inputArgs;
         originalFile = getFileFromPath(inputArgs.getFilePath());
         certificate = getCertificateFile(inputArgs.getCertificate());
     }

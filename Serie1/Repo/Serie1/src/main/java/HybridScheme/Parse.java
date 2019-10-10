@@ -29,7 +29,7 @@ public class Parse {
                 else if (inputArgs.isDecipher()) inputArgs.setMetadata(arg);
                 return;
             case 3:
-                inputArgs.setPrivateKeyFilePath(arg);
+                inputArgs.setEncryptedFilePath(arg);
                 return;
             default:
         }

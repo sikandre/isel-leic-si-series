@@ -6,18 +6,20 @@ public class InputArgs {
     private String certificate;
     private boolean decipher;
     private String metadata;
-    private String privateKeyFilePath;
+    private String encryptedFilePath;
+    private String keyStoreFilePath;
 
     public InputArgs() {
     }
 
-    public InputArgs(String filePath, boolean cipher, String certificate, boolean decipher, String metadata, String privateKeyFilePath) {
+    public InputArgs(String filePath, boolean cipher, String certificate, boolean decipher, String metadata, String privateKeyFilePath, String keyStoreFilePath) {
         this.filePath = filePath;
         this.cipher = cipher;
         this.certificate = certificate;
         this.decipher = decipher;
         this.metadata = metadata;
-        this.privateKeyFilePath = privateKeyFilePath;
+        this.encryptedFilePath = privateKeyFilePath;
+        this.keyStoreFilePath = keyStoreFilePath;
     }
 
     public String getFilePath() {
@@ -60,11 +62,19 @@ public class InputArgs {
         this.metadata = metadata;
     }
 
-    public String getPrivateKeyFilePath() {
-        return privateKeyFilePath;
+    public String getEncryptedFilePath() {
+        return encryptedFilePath;
     }
 
-    public void setPrivateKeyFilePath(String privateKeyFilePath) {
-        this.privateKeyFilePath = privateKeyFilePath;
+    public void setEncryptedFilePath(String encryptedFilePath) {
+        this.encryptedFilePath = encryptedFilePath;
+    }
+
+    public String getKeyStoreFilePath() {
+        return keyStoreFilePath;
+    }
+
+    public void setKeyStoreFilePath(String keyStoreFilePath) {
+        this.keyStoreFilePath = keyStoreFilePath;
     }
 }
