@@ -12,13 +12,13 @@ public class InputArgs {
     public InputArgs() {
     }
 
-    public InputArgs(String filePath, boolean cipher, String certificate, boolean decipher, String metadata, String privateKeyFilePath, String keyStoreFilePath) {
+    public InputArgs(String filePath, boolean cipher, String certificate, boolean decipher, String metadata, String encryptedFilePath, String keyStoreFilePath) {
         this.filePath = filePath;
         this.cipher = cipher;
         this.certificate = certificate;
         this.decipher = decipher;
         this.metadata = metadata;
-        this.encryptedFilePath = privateKeyFilePath;
+        this.encryptedFilePath = encryptedFilePath;
         this.keyStoreFilePath = keyStoreFilePath;
     }
 

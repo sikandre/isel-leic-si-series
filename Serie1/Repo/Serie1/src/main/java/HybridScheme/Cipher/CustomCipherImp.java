@@ -3,10 +3,10 @@ package HybridScheme.Cipher;
 import HybridScheme.Models.InputArgs;
 import HybridScheme.Models.Metadata;
 import MacThenEncryptJCA.Model.CipherMessage;
-import MacThenEncryptJCA.cipher.Abstractions.Cipher;
 import MacThenEncryptJCA.cipher.CipherImp;
 import org.apache.commons.io.IOUtils;
 
+import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
@@ -37,7 +37,7 @@ public class CustomCipherImp implements CustomCipher {
         X509Certificate cer = null;
         try {
             CertificateFactory fact = CertificateFactory.getInstance("X.509");
-            FileInputStream fis = new FileInputStream("Serie1/src/main/resources/"+certificate);
+            FileInputStream fis = new FileInputStream("Serie1/src/InputFiles/"+certificate);
             cer = (X509Certificate) fact.generateCertificate(fis);
 
         } catch (Exception e) {
@@ -49,9 +49,8 @@ public class CustomCipherImp implements CustomCipher {
     private byte[] getFileFromPath(String fileName) {
         byte[] result = new byte[0];
         try {
-            ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-            InputStream is = classloader.getResourceAsStream(fileName);
-            result = IOUtils.toByteArray(is);
+            FileInputStream fis = new FileInputStream("Serie1/src/InputFiles/"+fileName);
+            result = IOUtils.toByteArray(fis);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,17 +70,26 @@ public class CustomCipherImp implements CustomCipher {
     @Override
     public boolean CipherMessage() {
         try {
-            //using the same class to cipher from ex:8
-            Cipher cipher = new CipherImp();
-            CipherMessage cipherMessage = cipher.encryptUsingAES(originalFile, CIPHER_ALGORITHM);
-            //cipher key with public key
-            javax.crypto.Cipher c = javax.crypto.Cipher.getInstance("RSA");
-            c.init(javax.crypto.Cipher.ENCRYPT_MODE, certificate);
-            byte[] encryptedKey = c.doFinal(cipherMessage.key.getEncoded());
-            metadata = new Metadata(cipherMessage.initialVector, encryptedKey);
+            KeyGenerator keyGenerator = KeyGenerator.getInstance(CIPHER_ALGORITHM.split("/")[0]);
+            keyGenerator.init(128);
+            SecretKey key = keyGenerator.generateKey();
 
-            Files.write(Paths.get("cipherFile"), cipherMessage.msg);
-            Files.write(Paths.get("metadata"), metadata.getMetadataAsBytes());
+            byte[] initialVector = new byte[INITIAL_VECTOR_SIZE];
+            new Random().nextBytes(initialVector);
+            IvParameterSpec initialVectorSpecifications = new IvParameterSpec(initialVector);
+
+            javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance(CIPHER_ALGORITHM);
+            cipher.init( Cipher.ENCRYPT_MODE, key, initialVectorSpecifications);
+            byte[] encryptedOriginalFile = cipher.doFinal(originalFile);
+
+            //cipher key with public key
+            javax.crypto.Cipher c = javax.crypto.Cipher.getInstance("RSA/ECB/OAEPPadding");
+            c.init(Cipher.PUBLIC_KEY, certificate.getPublicKey());
+            byte[] encryptedKey = c.doFinal(key.getEncoded());
+            metadata = new Metadata(initialVector, encryptedKey);
+
+            Files.write(Paths.get("Serie1/src/OutputFiles/cipherFile"), encryptedOriginalFile);
+            Files.write(Paths.get("Serie1/src/OutputFiles/metadata"), metadata.getMetadataAsBytes());
 
         } catch (GeneralSecurityException | IOException e) {
             System.out.println(e.getMessage());
