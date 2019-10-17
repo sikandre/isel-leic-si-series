@@ -16,10 +16,8 @@ public class CipherImp implements Cipher {
     public CipherMessage encryptUsingAES(byte[] msg, String algorithm) throws GeneralSecurityException {
         KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm.split("/")[0]);
         SecretKey key = keyGenerator.generateKey();
-
         byte[] initialVector = new byte[INITIAL_VECTOR_SIZE];
         new Random().nextBytes(initialVector);
-
         IvParameterSpec initialVectorSpecifications = new IvParameterSpec(initialVector);
 
         // Encrypting message

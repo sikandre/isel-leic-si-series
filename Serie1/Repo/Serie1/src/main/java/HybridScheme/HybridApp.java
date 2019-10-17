@@ -15,14 +15,19 @@ public class HybridApp {
             args = new Scanner(System.in).nextLine().split(" ");
         }
 
+        boolean isOperationDone = false;
         InputArgs inputArgs = Parse.getInputArgs(args);
         if(inputArgs.isCipher()){
             CustomCipher cipher = new CustomCipherImp(inputArgs);
+             isOperationDone = cipher.CipherMessage();
         }
         else if(inputArgs.isDecipher()){
             CustomDecipher decipher = new CustomDecipherImp(inputArgs);
+            isOperationDone = decipher.decipherMessage();
         }
         else
             System.out.println("No action found");
+
+        System.out.println("Operation done with "+ (isOperationDone ? "success" : "failed"));
     }
 }
