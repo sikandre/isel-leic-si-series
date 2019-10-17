@@ -10,13 +10,11 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import java.io.*;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.*;
 import java.security.cert.*;
-import java.security.cert.Certificate;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -86,7 +84,7 @@ public class CustomCipherImp implements CustomCipher {
         return initialVector;
     }
 
-    private boolean validateCertificate(X509Certificate cert) throws CustomCipherException {
+    private boolean validateCertificatePath(X509Certificate cert) throws CustomCipherException {
         try {
             char[] pw = {'c', 'h', 'a', 'n', 'g', 'e', 'i', 't'};
             KeyStore ks = getKeyStore("ks.jks", pw);
@@ -130,6 +128,22 @@ public class CustomCipherImp implements CustomCipher {
         CollectionCertStoreParameters ccsp = new CollectionCertStoreParameters(chain);
         return CertStore.getInstance("Collection", ccsp);
     }
+    private boolean authenticateCertificate(X509Certificate certificate) throws CustomCipherException {
+        PublicKey publicKey = getAuthorizingCertificate(certificate).getPublicKey();
+        try {
+            certificate.verify(publicKey);
+            return true;
+        } catch (CertificateException |SignatureException | NoSuchAlgorithmException |InvalidKeyException | NoSuchProviderException e) {
+            e.printStackTrace();
+            throw new CustomCipherException();
+        }
+    }
+
+    private X509Certificate getAuthorizingCertificate(X509Certificate certificate) {
+        String path = certificate.getIssuerDN().getName().split(",")[0].split("=")[1]+ ".cer";
+        X509Certificate authority = getCertificateFile(path);
+        return authority;
+    }
 
     @Override
     public boolean CipherMessage() {
@@ -152,7 +166,8 @@ public class CustomCipherImp implements CustomCipher {
             metadata = new Metadata(initialVector, encryptedKey);
 
             Files.write(Paths.get("Serie1/src/OutputFiles/cipherFile"), encryptedOriginalFile);
-            validateCertificate(certificate);
+            authenticateCertificate(certificate);
+            validateCertificatePath(certificate);
             Files.write(Paths.get("Serie1/src/OutputFiles/metadata"), metadata.getMetadataAsBytes());
 
         } catch (GeneralSecurityException | IOException | CustomCipherException e) {
