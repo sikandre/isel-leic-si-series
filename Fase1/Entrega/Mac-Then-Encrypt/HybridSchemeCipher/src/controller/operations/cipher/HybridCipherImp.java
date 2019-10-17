@@ -97,7 +97,6 @@ public class HybridCipherImp extends HybridScheme {
 
     }
 
-    // TODO implement certification chain validation
     private boolean validateCertificate(String certificatePath) {
         try {
             char [] pw = {'c','h','a','n','g','e','i','t'};

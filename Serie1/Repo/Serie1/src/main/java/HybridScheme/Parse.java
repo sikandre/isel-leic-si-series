@@ -14,7 +14,8 @@ public class Parse {
         }
         return inputArgs;
     }
-
+    //serie1-1920i.pdf cifra cert-end.entities/Alice_1.cer
+//AES/CBC/PKCS5Padding RSA/ECB/PKCS1Padding serie1-1920i.pdf cipher Alice_1.cer out.txt
     private static void setArg(String arg, int i) {
         switch (i){
             case 0:
