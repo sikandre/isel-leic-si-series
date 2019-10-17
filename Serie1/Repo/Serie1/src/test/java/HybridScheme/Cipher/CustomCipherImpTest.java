@@ -11,7 +11,7 @@ public class CustomCipherImpTest {
         InputArgs inputArgs = new InputArgs(
                 "serie1-1920i.pdf",
                 true,
-                "cert-end.entities/Alice_1.cer",
+                "Alice_1.cer",
                 false,
                 null,
                 null,
