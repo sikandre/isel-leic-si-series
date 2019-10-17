@@ -7,7 +7,7 @@ import org.junit.Test;
 public class CustomCipherImpTest {
 
     @Test
-    public void cipherMessage() {
+    public void cipherMessage() throws CustomCipherException {
         InputArgs inputArgs = new InputArgs(
                 "serie1-1920i.pdf",
                 true,

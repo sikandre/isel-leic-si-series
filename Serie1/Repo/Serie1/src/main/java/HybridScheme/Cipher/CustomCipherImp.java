@@ -4,19 +4,15 @@ import HybridScheme.Models.InputArgs;
 import HybridScheme.Models.Metadata;
 import org.apache.commons.io.IOUtils;
 
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
+import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import java.io.*;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.*;
 import java.security.cert.*;
-import java.util.LinkedList;
-import java.util.Random;
+import java.util.*;
 
 public class CustomCipherImp implements CustomCipher {
     private static final int INITIAL_VECTOR_SIZE = 16;
@@ -31,16 +27,47 @@ public class CustomCipherImp implements CustomCipher {
         certificate = getCertificateFile(inputArgs.getCertificate());
     }
 
+    @Override
+    public boolean CipherMessage() throws CustomCipherException {
+        try {
+            authenticateCertificate(certificate);
+            validateCertificatePath(certificate);
+
+            KeyGenerator keyGenerator = KeyGenerator.getInstance(CIPHER_ALGORITHM.split("/")[0]);
+            keyGenerator.init(128);
+            SecretKey key = keyGenerator.generateKey();
+
+            byte[] initialVector = generateInitialVector();
+            IvParameterSpec initialVectorSpecifications = new IvParameterSpec(initialVector);
+
+            Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+            cipher.init(Cipher.ENCRYPT_MODE, key, initialVectorSpecifications);
+            byte[] encryptedOriginalFile = cipher.doFinal(originalFile);
+
+            //cipher key with public key
+            Cipher c = Cipher.getInstance("RSA/ECB/OAEPPadding");
+            c.init(Cipher.PUBLIC_KEY, certificate.getPublicKey());
+            byte[] encryptedKey = c.doFinal(key.getEncoded());
+            metadata = new Metadata(initialVector, encryptedKey);
+
+            Files.write(Paths.get("Serie1/src/OutputFiles/cipherFile"), encryptedOriginalFile);
+            Files.write(Paths.get("Serie1/src/OutputFiles/metadata"), metadata.getMetadataAsBytes());
+
+        } catch (CustomCipherException | IOException | GeneralSecurityException e) {
+            throw new CustomCipherException(e.getMessage());
+        }
+        return true;
+    }
+
     private X509Certificate getCertificateFile(String certificate) {
         X509Certificate cer = null;
         try {
             CertificateFactory fact = CertificateFactory.getInstance("X.509");
-
             FileInputStream fis = new FileInputStream(getCertificateFilePath(certificate));
             cer = (X509Certificate) fact.generateCertificate(fis);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(certificate+" Not Found");
         }
         return cer;
     }
@@ -84,58 +111,52 @@ public class CustomCipherImp implements CustomCipher {
         return initialVector;
     }
 
-    private boolean validateCertificatePath(X509Certificate cert) throws CustomCipherException {
+    private void validateCertificatePath(X509Certificate leafCertificate) throws CustomCipherException {
         try {
-            char[] pw = {'c', 'h', 'a', 'n', 'g', 'e', 'i', 't'};
-            KeyStore ks = getKeyStore("ks.jks", pw);
+            LinkedList<X509Certificate> chainCertificate = getChainCertificate(leafCertificate);
+            // Find root certificate
+            X509Certificate rootCert = null;
+            for (X509Certificate c : chainCertificate) {
+                if (isRoot(c)){
+                    rootCert = c;
+                    chainCertificate.remove(c);
+                }
+            }
+            if(rootCert == null) throw new CustomCipherException("Chain Certificate Root not Found");
 
             X509CertSelector selector = new X509CertSelector();
-            selector.setCertificate(cert);
+            selector.setCertificate(leafCertificate);
+            TrustAnchor trustAnchors = new TrustAnchor(rootCert, null);
 
-            CertStore cs = getCertStore(cert);
+            PKIXBuilderParameters pkixParams = new PKIXBuilderParameters(Collections.singleton(trustAnchors), selector);
+            pkixParams.setRevocationEnabled(false);
+            CertStore intermediateCertStore = CertStore.getInstance("Collection", new CollectionCertStoreParameters(chainCertificate));
+            pkixParams.addCertStore(intermediateCertStore);
+            // Build and verify the certification chain
+            CertPathBuilder builder = CertPathBuilder.getInstance("PKIX");
+            builder.build(pkixParams);
 
-            PKIXBuilderParameters xparams = new PKIXBuilderParameters(ks, selector);
-            xparams.setRevocationEnabled(false);
-            xparams.addCertStore(cs);
-
-            CertPathBuilder cpb = CertPathBuilder.getInstance("PKIX");
-            cpb.build(xparams);
-
-        } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException |
-                CertPathBuilderException | KeyStoreException | CertificateException |
-                IOException | URISyntaxException e ) {
-            throw new CustomCipherException();
+        } catch (GeneralSecurityException e) {
+            throw new CustomCipherException(e.getMessage());
         }
-        return true;
     }
 
-    private KeyStore getKeyStore(String ksName, char[] pw) throws KeyStoreException, URISyntaxException, IOException, CertificateException, NoSuchAlgorithmException {
-        KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
-        File file = Paths.get("Serie1/src/InputFiles/" + ksName).toFile();
-        ks.load(new FileInputStream(file), pw);
-        return ks;
-    }
-
-    private CertStore getCertStore(X509Certificate endCertificate) throws InvalidAlgorithmParameterException, NoSuchAlgorithmException {
+    private LinkedList<X509Certificate> getChainCertificate(X509Certificate leafCertificate) {
         LinkedList<X509Certificate> chain = new LinkedList<>();
-        X509Certificate curr = endCertificate;
+        X509Certificate curr = leafCertificate;
         while (!curr.getSubjectDN().getName().equals(curr.getIssuerDN().getName())) {
-            chain.add(curr);
             String name = curr.getIssuerDN().getName().split(",")[0].split("=")[1];
             curr = getCertificateFile(name + ".cer");
+            chain.add(curr);
         }
-        chain.add(curr);
-        CollectionCertStoreParameters ccsp = new CollectionCertStoreParameters(chain);
-        return CertStore.getInstance("Collection", ccsp);
+        return chain;
     }
-    private boolean authenticateCertificate(X509Certificate certificate) throws CustomCipherException {
+    private void authenticateCertificate(X509Certificate certificate) throws CustomCipherException {
         PublicKey publicKey = getAuthorizingCertificate(certificate).getPublicKey();
         try {
             certificate.verify(publicKey);
-            return true;
-        } catch (CertificateException |SignatureException | NoSuchAlgorithmException |InvalidKeyException | NoSuchProviderException e) {
-            e.printStackTrace();
-            throw new CustomCipherException();
+        } catch (GeneralSecurityException e) {
+            throw new CustomCipherException("Authentication Failed");
         }
     }
 
@@ -145,36 +166,16 @@ public class CustomCipherImp implements CustomCipher {
         return authority;
     }
 
-    @Override
-    public boolean CipherMessage() {
+    private static boolean isRoot(X509Certificate cert) throws GeneralSecurityException {
         try {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance(CIPHER_ALGORITHM.split("/")[0]);
-            keyGenerator.init(128);
-            SecretKey key = keyGenerator.generateKey();
-
-            byte[] initialVector = generateInitialVector();
-            IvParameterSpec initialVectorSpecifications = new IvParameterSpec(initialVector);
-
-            javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance(CIPHER_ALGORITHM);
-            cipher.init(Cipher.ENCRYPT_MODE, key, initialVectorSpecifications);
-            byte[] encryptedOriginalFile = cipher.doFinal(originalFile);
-
-            //cipher key with public key
-            javax.crypto.Cipher c = javax.crypto.Cipher.getInstance("RSA/ECB/OAEPPadding");
-            c.init(Cipher.PUBLIC_KEY, certificate.getPublicKey());
-            byte[] encryptedKey = c.doFinal(key.getEncoded());
-            metadata = new Metadata(initialVector, encryptedKey);
-
-            Files.write(Paths.get("Serie1/src/OutputFiles/cipherFile"), encryptedOriginalFile);
-            authenticateCertificate(certificate);
-            validateCertificatePath(certificate);
-            Files.write(Paths.get("Serie1/src/OutputFiles/metadata"), metadata.getMetadataAsBytes());
-
-        } catch (GeneralSecurityException | IOException | CustomCipherException e) {
-            System.out.println(e.getMessage());
-            System.out.println("unable to cipher");
+            // Try to verify certificate signature with its own public key
+            PublicKey key = cert.getPublicKey();
+            cert.verify(key);
+            return true;
+        } catch (SignatureException | InvalidKeyException e) {
             return false;
         }
-        return true;
     }
+
+
 }

@@ -1,5 +1,5 @@
 package HybridScheme.Cipher;
 
 public interface CustomCipher {
-    boolean CipherMessage();
+    boolean CipherMessage() throws CustomCipherException;
 }
