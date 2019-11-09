@@ -176,7 +176,7 @@ José \textsc{Simão}\\
 \newpage
 
 
-\section{Introdução}
+\section*{Introdução}
 O trabalho realizado para este fase pretende que os temas desenvolvidos durante as aulas sejam postos em prática. Para esta fase os exercícios focaram essencialmente a segunda parte da matéria.\\
 
 \begin{itemize}
@@ -189,24 +189,38 @@ Neste trabalho prático pretendemos responder aos vários exercícios propostos 
 
 \newpage
 
-\section{Segunda série de exercícios}
 
-\subsection{Exercício 1}
-	\subsubsection*{1.1}
+\section{Exercício 1}
+	\subsection*{1.1}
 	Um esquema de assinatura as chaves usadas são assimétricas o que permite a que autentica a mensagem usa a sua chave privada para o efeito e o recetor usa a chave publica do emissor para a autenticar essa mesma mensagem. Um esquema Mac como a chave é simétrica numa fase inicial através de um canal seguro teriam que ser trocadas para que desta forma ambos os intervenientes tenham a mesma chave para verificar a autenticidade da mensagem.
 	
-	\subsubsection*{1.2}
+	\subsection*{1.2}
 	As recomendações do texto abordam fragilidades de segurança no caso de um atacante conseguir obter a chave privada de um servidor durante a sessão estabelecida entre o cliente e o servidor. No caso de um atacante obter a chave privada de um servidor passa a poder obter todas as mensagens dirigidas a ele, mas com a nova diretiva obriga a que a cada sessão durante a fase de \textit{handshake} sejam estabelecidas novas chaves o que faz com que a chave do atacante deixe ter utilidade.
 
-\subsection{Exercício 2}
+\section{Exercício 2}
 	O algoritmo simétrico para cifrar a \textit{password} de um utilizador é criado através da função de \textit{hash} com um valor aleatório unico a cada utilizador prevenindo assim que ataques de dicionario, ou seja, \textit{passwords} iguais passam a ter valores de \textit{hash} diferentes tornando a sua chave unica para cada utilizador. Para realizar a decifra realiza se o mesmo processo à \textit{password} introduzida pelo utilizador, usa se o mesmo valor de \textit{salt} e realiza se a comparação devolvendo um verdadeiro ou falso.
 
-\subsection{Exercício 3}
+\section{Exercício 3}
+	A criação de um \textit{cookie} passa por vaias fases até ser guardado no lado do cliente para garantir a autenticidade durante a sua sessão sem que este tenha que validar as suas credencias constantemente.
+	O processo passa pelos seguintes passos:
+	\begin{enumerate}
+		\item O utilizador garante a sua autenticidade através de credenciais introduzidas no lado do servidor ou através de um redirecionamento para um fornecedor de identidade.
+		\item O utilizador é então autenticado recebendo um código. 
+		\item É novamente redirecionado para o servidor sendo que este troca o código por um \textit{id\_token}.
+		\item O servidor realiza a operação de \textit{setCookie} por forma a que o utilizador nas proximas chamadas envie o \textit{cookie} para que este não tenha a necessidade de se autenticar.
+		\item O servidor autenticou o \textit{cookie} e de todas as vezes realizar uma operação de autenticação para o confirmar.
+	\end{enumerate}
 
-\subsection{Exercício 4}
-%todo
+\section{Exercício 4}
+	\subsection*{4.1}
+	
+	
+	\subsection*{4.2}
+	
+	
+	\subsection*{4.3}
 
-\subsection{Exercício 5}
+\section{Exercício 5}
 
 
 \newpage
