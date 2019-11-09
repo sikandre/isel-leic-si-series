@@ -213,15 +213,17 @@ Neste trabalho prático pretendemos responder aos vários exercícios propostos 
 
 \section{Exercício 4}
 	\subsection*{4.1}
-	
-	
+	O parâmetro \textit{scope} refere-se ao access token a ser gerado e enumera o acesso que a aplicação cliente pretende ter.
 	\subsection*{4.2}
-	
+	O client id e o client secret servem para o relying party se autenticar junto do fornecedor de identidade, e, como tal, é usado num pedido POST originado no relying party para o fornecedor de identidade. Portanto, nunca devem passar pelo browser.
 	
 	\subsection*{4.3}
+	Indirectamente sim. No entanto, depois de um utilizador se autenticar junto do servidor de autorização, é gerada uma resposta com código 302 (redirect), para o browser com o callback da aplicação cliente no header location e com CODE. o browser gera um pedido get para o callback da aplicação cliente, que recebe o CODE, e o envia para o token endpoint do servidor de autorização junto com o client id e o client secret. Em resposta, o servidor de autorização envia o ID Token, que, de acordo com o parâmetro scope, inclui a informação de identidade a que utilizador deu acesso à aplicação cliente.
 
 \section{Exercício 5}
-
+	O ID Token é obtido quando o relying party acede ao token endpoint, onde troca CODE pelo ID Token.
+	É um objecto estruturado, assinado e cifrado e serve ao relying party para garantir que o utilizador se autenticou junto do itentity provider, contendo informação de perfil, que pode ser usada para personalizar a experiência do utilizador.
+	Este também pode ser usado pelo relying party para associar um utilizador ao seu autenticador, sendo uma má prática publicá-lo directamente no autenticador a entregar ao utilizador.
 
 \newpage
 
