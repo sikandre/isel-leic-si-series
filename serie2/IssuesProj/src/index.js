@@ -1,12 +1,16 @@
+//npm install semantic-ui
+
 const express = require('express')
 var path = require('path')
 const app = express()
 var request = require('request');
 var cookieParser = require('cookie-parser');
-const verifyToken = require('./verifyToken');
 var jwt = require('jsonwebtoken');
+var HashMap = require('hashmap');
+
 const port = 3001;
-app.use(express.static('public'));
+app.use(express.static(__dirname));
+var map = new HashMap();
 
 // more info at:
 // https://github.com/auth0/node-jsonwebtoken
@@ -20,7 +24,10 @@ const CLIENT_SECRET = "vsoGMhmC5vq0NTNxHGgNqxNb";
 //process.env.JWT_SECRET
 const JWT_SECRET = "vsoGMhmC5vq0NTNxHGgNqxNbvsoGMhmC5vq0NTNxHGgNqxNb";
 
-let email = "";
+//github credentials
+const GIT_CLIENT_ID = "8440aaee2cd8100b1136";
+const GIT_CLIENT_SECRET = "e45df0fe9b0c45e85992dee198aff1ab54a94c20";
+
 
 let publicDir = path.join(__dirname, 'public');
 let state = Math.round(new Date().getTime()).toString();
@@ -28,26 +35,35 @@ let state = Math.round(new Date().getTime()).toString();
 app.use(cookieParser());
 
 app.get('/', function (req, res) {
+
+
     res.sendFile(path.join(publicDir, 'index.html'));
 });
 
 const validateToken = (req, resp, next) => {
-    let token =  req.cookies['token'];
-    if (token){
-        const decrypt = jwt.verify(token, JWT_SECRET);
-        if (decrypt.email === email && decrypt.CLIENT_ID === CLIENT_ID){
+    let cookie =  req.cookies['token'];
+    if (cookie){
+        const decrypt = jwt.verify(cookie, JWT_SECRET);
+        let json_response = map.get(decrypt.email);
+        let jwt_payload = jwt.decode(json_response.id_token);
+        let sub = jwt_payload.sub;
+        console.log(sub);
+        if (decrypt.sub === sub){
+            resp.status(200);
             next();
         }
     }
     resp.status(403);
     resp.sendFile(path.join(publicDir, 'Forbidden.html'));
+
+
 };
 
 app.get('/auth', validateToken, (req, resp) => {
    //teste para fazer auth com o git
 
 
-    resp.send(req.cookies['token'])
+    resp.send('done');
 
 });
 
@@ -87,33 +103,108 @@ app.get('/googlecallback', (req, resp) => {
                 }
             },
 
-            //TODO remover esta area para iniciar leitura dos issues do git
             function (err, httpResponse, body) {
                 if (err) {
                     resp.status(400).send({error});
                 }
                 let json_response = JSON.parse(body);
                 let jwt_payload = jwt.decode(json_response.id_token);
-                email = jwt_payload.email;
+                let email = jwt_payload.email;
+                let sub = jwt_payload.sub;
 
-                console.log(jwt_payload);
                 resp.statusCode = 200;
-                /*
-                // compute hmac
-                var h = hmac.digest(jwt_payload.at_hash)
-                // convert to base64
-                var hBase64 = Buffer.from(h).toString('base64');
-                //resp.setHeader('jwt', ['jwt_payload', 'T='+hBase64], );*/
 
-                const token = jwt.sign({email, CLIENT_ID}, JWT_SECRET);
-                console.log("token created", token)
+                const token = jwt.sign({email, sub}, JWT_SECRET);
                 resp.cookie('token', token, {
                     expires: new Date(Date.now() + 360000),
                     secure: false, // set to true if your using https
                     httpOnly: true,
                 });
+                //save data in memory
+                if (map.get(email)) {
+                    map.delete(email);
+                }
+                map.set(email, json_response);
+                //resp.sendFile(path.join(publicDir, 'GithubLogin.html'));
+                resp.redirect('/getRepos');
 
-                resp.send('<a href="/auth">auth</a>')
+            }
+        );
+
+    }
+});
+
+app.get('/getrepos', /*validateToken,*/ (req, resp) => {
+    resp.sendFile(path.join(publicDir, 'GithubLogin.html'));
+
+
+    //resp.send('done');
+
+});
+app.get('/logingit', /*validateToken,*/ (req, resp) => {
+    resp.redirect(302,
+        // authorization endpoint
+        'https://github.com/login/oauth/authorize?'
+        // client id
+        + 'client_id=' + GIT_CLIENT_ID + '&'
+        // scope "openid email"
+        + 'scope=openid%20email&'
+        // parameter state should bind the user's session to a request/response
+        + 'state=' + state + '&'
+        // responde_type for "authorization code grant"
+        //+ 'response_type=code&'
+        // redirect uri used to register RP
+        + 'redirect_uri=http://localhost:3001/githubcallback');
+});
+
+app.get('/githubcallback', (req, resp) => {
+    if (req.query.state !== state) {
+        resp.status(403);
+        resp.sendFile(path.join(publicDir, 'Forbidden.html'));
+    } else {
+        //get token
+        request.post(
+            {
+                url: 'https://github.com/login/oauth/access_token',
+                // body parameters
+                form: {
+                    code: req.query.code,
+                    client_id: GIT_CLIENT_ID,
+                    client_secret: GIT_CLIENT_SECRET,
+                    redirect_uri: 'http://localhost:3001/githubcallback',
+                    state: state
+                }
+            },
+
+            function (err, httpResponse, body) {
+                if (err) {
+                    resp.status(400).send({error});
+                }
+                //let json_response = JSON.parse(body);
+                console.log("aki",body);
+                /*
+
+                let jwt_payload = jwt.decode(json_response.id_token);
+                let email = jwt_payload.email;
+                let sub = jwt_payload.sub;
+
+                resp.statusCode = 200;
+
+                const token = jwt.sign({email, sub}, JWT_SECRET);
+                resp.cookie('token', token, {
+                    expires: new Date(Date.now() + 360000),
+                    secure: false, // set to true if your using https
+                    httpOnly: true,
+                });
+                //save data in memory
+                if (map.get(email)) {
+                    map.delete(email);
+                }
+                map.set(email, json_response);
+                //resp.sendFile(path.join(publicDir, 'GithubLogin.html'));
+                resp.redirect('/getRepos');
+                */
+                 resp.send('done');
 
             }
         );
@@ -122,11 +213,9 @@ app.get('/googlecallback', (req, resp) => {
 });
 
 
-
-
 app.listen(port, (err) => {
     if (err) {
         return console.log('something bad happened', err)
     }
     console.log(`server is listening on ${port}`)
-})
+});
