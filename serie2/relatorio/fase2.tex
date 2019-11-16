@@ -226,6 +226,48 @@ Neste trabalho prático pretendemos responder aos vários exercícios propostos 
 	É um objecto estruturado, assinado e cifrado e serve ao relying party para garantir que o utilizador se autenticou junto do itentity provider, contendo informação de perfil, que pode ser usada para personalizar a experiência do utilizador.
 	Este também pode ser usado pelo relying party para associar um utilizador ao seu autenticador, sendo uma má prática publicá-lo directamente no autenticador a entregar ao utilizador.
 
+\section{Exercício 6}
+	i) 	Primeiro, efectuou-se a autenticação do servidor, usando o browser como aplicação cliente:
+	\begin{enumerate}
+		\item Foi gerado o ficheiro PEM com chave privada do servidor 'secure-server-private.pem' através do comando: openssl pkcs12 -in secure-server.pfx -out secure-server-private.pem -nodes
+		\item Foi gerado o ficheiro PEM com certificado do servidor 'secure-server.pem' através do comando : openssl x509 -inform der -in secure-server.cer -out secure-server.pem
+		\item Foi adicionado ao ficheiro \path{C:\Windows\System32\drivers\etc\hosts} a linha '127.0.0.1 www.secure-server.edu'
+		\item Foram comentadas na aplicação servidora as linhas
+		\begin{lstlisting}
+		ca: fs.readFileSync('CA1.pem'), 
+		requestCert: true, 
+		rejectUnauthorized: true 
+		\end{lstlisting}
+		\item Acedeu-se a \url{https:\\www.secure-server.edu:4433}
+	\end{enumerate}
+	Em seguida, efectuou-se, ainda usando o browser como aplicação cliente, a autenticação de cliente da seguinte forma:
+	\begin{enumerate}
+		\item Gerou-se o ficheiro com o certificado PEM da CA root através do comando openssl x509 -inform der -in CA1.cer -out CA1.pem
+		\item Instalaram-se os quatro certificados-folha com o Assistente para importar certificados do sistema operativo.
+		\item Acedeu-se a \url{https:\\www.secure-server.edu:4433} e obteve-se a resposta 200 OK, com a string 'Secure Hello World with node.js'.
+	\end{enumerate}
+
+	ii) Foi desenvolvida a aplicação cliente Java constante de HttpsClient.java.
+	Foram gerados os KeyStores (.jks) com a chave privada do cliente (client.jks) e com os certificados das raízes de confiança (trustedroots.jks). Para gerar o primeiro ficheiro, executaram-se os comandos:
+	\begin{enumerate}
+	\item keytool -importkeystore -srckeystore Alice\textunderscore1.pfx -srcstoretype pkcs12 -destkeystore client.jks -deststoretype JKS
+	
+	\item keytool -changealias -alias ``1`` -destalias ``Alice\textunderscore 1`` -keystore 
+	``client.jks``
+	\end{enumerate}
+	Para gerar o segundo ficheiro, executaram-se os comandos:
+	\begin{enumerate}
+		\item keytool -importcert -file ``CA1.cer`` -keystore trustedroots.jks -alias ``CA1``
+		\item keytool -importcert -file ``CA1-int.cer`` -keystore trustedroots.jks -alias ``CA1-int``
+	\end{enumerate}
+
+	iii) Foi testada a aplicação desenvolvida, com e sem autenticação de cliente. Para desabilitar autenticação de cliente foram comentadas na aplicação cliente as linhas
+	\begin{lstlisting}
+	ca: fs.readFileSync('CA1.pem'), 
+	requestCert: true, 
+	rejectUnauthorized: true 
+	\end{lstlisting}
+	Na aplicação cliente, foi desabilitado o carregamento do KeyStore com o certificado do cliente. 
 \newpage
 
 
