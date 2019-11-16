@@ -1,0 +1,13 @@
+extends layout
+
+block layout-content
+    h1 Welcome
+    h2
+    img(src='https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png' alt='github' style='display: block; margin-left: auto; margin-right: auto')
+    .row
+        .col
+            br
+            br
+            button(style='font-size:24px' onclick="window.location.href = '/logingit';")
+                | Authenticate in Github
+                i.fa.fa-github
