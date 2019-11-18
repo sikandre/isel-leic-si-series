@@ -1,0 +1,14 @@
+extends layout
+
+block layout-content
+    h1 Phase2
+    h2
+    h3 Andre Mendes, 43320
+    h3 Samuel Costa, 43552
+    img(src='https://www.isel.pt/media/assets/default/images/logo-isel.png' alt='ISEL' style='display: block; margin-left: auto; margin-right: auto')
+    form(action='/action_page.php')
+        .row
+            .col
+                a.google.btn(href='/login')
+                    i.fa.fa-google.fa-fw
+                    |  Login with Google
