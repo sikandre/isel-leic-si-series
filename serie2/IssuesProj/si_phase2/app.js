@@ -12,6 +12,7 @@ var gitindexRouter = require('./routes/gitindex');
 var gitloginRouter = require('./routes/gitlogin');
 var githubcallbackRouter = require('./routes/githubcallback');
 var getreposRouter = require('./routes/getrepos');
+var posttaskRouter = require('./routes/posttask');
 var app = express();
 
 
@@ -33,6 +34,7 @@ app.use('/gitindex', gitindexRouter);
 app.use('/logingit', gitloginRouter);
 app.use('/githubcallback', githubcallbackRouter);
 app.use('/getrepos', getreposRouter);
+app.use('/posttask', posttaskRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

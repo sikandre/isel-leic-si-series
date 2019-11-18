@@ -7,43 +7,16 @@ block layout-content
         thead
             tr
                 th
-                th Repo name
-                th Author
-                th E-mail address
-                th Premium Plan
+                th Repo Name
+                th Issue Title
+                th Issue Body
         tbody
-            tr
-                td.collapsing
-                    .ui.fitted.slider.checkbox
-                        input(type='checkbox')
-                        label
-                td John Lilki
-                td September 14, 2013
-                td jhlilk22@yahoo.com
-                td No
-            tr
-                td.collapsing
-                    .ui.fitted.slider.checkbox
-                        input(type='checkbox')
-                        label
-                td Jamie Harington
-                td January 11, 2014
-                td jamieharingonton@yahoo.com
-                td Yes
-            tr
-                td.collapsing
-                    .ui.fitted.slider.checkbox
-                        input(type='checkbox')
-                        label
-                td Jill Lewis
-                td May 11, 2014
-                td jilsewris22@yahoo.com
-                td Yes
-        tfoot.full-width
-            tr
-                th
-                th(colspan='4')
-                    .ui.small.button
-                        | Approve
-                    .ui.small.button
-                        | Approve All
+            each issue in issues
+                tr
+                    td.collapsing
+                        a(href=`/posttask/${issue.issueTitle}`)
+                            button.ui.primary.button
+                                | Save
+                    td=issue.repoName
+                    td=issue.issueTitle
+                    td=issue.issueBody

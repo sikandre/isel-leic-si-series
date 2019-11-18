@@ -4,11 +4,11 @@ const usersMap = require("../public/UsersData");
 const request = require("request");
 
 router.get('/:username', function(req, res, next) {
-    //res.send('repos');
+    //TODO validate token
     var username = req.params.username;
     var user = usersMap.getUser(username);
     var accessToken = user.git_access_token;
-    console.log(accessToken);
+    var issues = [];
     request.get({
             url: 'https://api.github.com/issues',
             headers: {
@@ -19,12 +19,19 @@ router.get('/:username', function(req, res, next) {
         },
         function (error, resp, body) {
             // body is the decompressed response body
-            console.log("body", body);
+            var bodyParsed = JSON.parse(body);
+            //console.log("body", bodyParsed);
+
+            bodyParsed.forEach((issue) => issues.push({
+                repoName: issue.url,
+                issueTitle: issue.title,
+                issueBody: issue.body
+            }));
+            console.log("issues", issues);
+            res.status(200);
+            res.render('listrepos', {issues: issues});
         }
     );
-    res.render('listrepos');
-
-
 });
 
 module.exports = router;

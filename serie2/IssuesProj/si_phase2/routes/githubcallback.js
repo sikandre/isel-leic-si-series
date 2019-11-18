@@ -1,7 +1,6 @@
 var express = require('express');
 const request = require("request");
 var router = express.Router();
-var jwt = require('jsonwebtoken');
 const usersData = require("../public/UsersData");
 
 //github credentials
@@ -46,42 +45,5 @@ router.get('/:username', (req, resp, next) => {
         );
     }
 });
-
-
-/*console.log("aki",body);
-//var access_token = body.split('=')[1].split('&')[0];
-console.log(JSON.parse(body));
-//save access_token from github*/
-
-
-//console.log("http", httpResponse);
-/*
-
-let jwt_payload = jwt.decode(json_response.id_token);
-let email = jwt_payload.email;
-let sub = jwt_payload.sub;
-
-resp.statusCode = 200;
-
-const token = jwt.sign({email, sub}, JWT_SECRET);
-resp.cookie('token', token, {
-    expires: new Date(Date.now() + 360000),
-    secure: false, // set to true if your using https
-    httpOnly: true,
-});
-//save data in memory
-if (map.get(email)) {
-    map.delete(email);
-}
-map.set(email, json_response);
-//resp.sendFile(path.join(publicDir, 'GithubLogin.html'));
-resp.redirect('/getRepos');
-*/
-
-
-/*    }
-);
-
-}*/
 
 module.exports = router;
