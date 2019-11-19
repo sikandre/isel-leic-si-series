@@ -27,9 +27,9 @@ router.get('/:username', function(req, res, next) {
                 issueTitle: issue.title,
                 issueBody: issue.body
             }));
-            console.log("issues", issues);
+            console.log(JSON.stringify(issues[0]));
             res.status(200);
-            res.render('listrepos', {issues: issues});
+            res.render('listrepos', {issues: issues, username: username});
         }
     );
 });

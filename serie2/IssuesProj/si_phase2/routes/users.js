@@ -4,7 +4,7 @@ const usersData = require("../public/UsersData");
 
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/:username', function(req, res, next) {
   res.send('user');
 });
 

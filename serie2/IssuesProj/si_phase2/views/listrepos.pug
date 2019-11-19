@@ -12,9 +12,11 @@ block layout-content
                 th Issue Body
         tbody
             each issue in issues
+                -var s = JSON.stringify(issue);
+                    -console.log("s",s);
                 tr
                     td.collapsing
-                        a(href=`/posttask/${issue.issueTitle}`)
+                        a(href=`/posttask/${s}`)
                             button.ui.primary.button
                                 | Save
                     td=issue.repoName

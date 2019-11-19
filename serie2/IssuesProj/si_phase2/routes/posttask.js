@@ -1,10 +1,12 @@
 var express = require('express');
-const request = require("request");
 var router = express.Router();
-const usersData = require("../public/UsersData");
+const usersMap = require("../public/UsersData");
+const request = require("request");
 
-router.get('/:taskname', function(req, res, next) {
-    res.send('user');
+router.get('/*', function(req, res, next) {
+    var username = req.params[0];
+    console.log(JSON.parse(username));
+    res.send('save');
 });
 
 module.exports = router;
