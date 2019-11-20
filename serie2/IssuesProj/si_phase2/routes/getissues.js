@@ -23,11 +23,11 @@ router.get('/:username', function(req, res, next) {
             //console.log("body", bodyParsed);
 
             bodyParsed.forEach((issue) => issues.push({
+                username: username,
                 repoName: issue.url,
                 issueTitle: issue.title,
                 issueBody: issue.body
             }));
-            console.log(JSON.stringify(issues[0]));
             res.status(200);
             res.render('listrepos', {issues: issues, username: username});
         }

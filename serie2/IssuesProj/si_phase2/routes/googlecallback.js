@@ -42,10 +42,11 @@ router.get('/', (req, resp) => {
 
                 const token = jwt.sign({email, sub}, JWT_SECRET);
                 resp.cookie('token', token, {
-                    expires: new Date(Date.now() + 360000),
+                    expires: new Date(Date.now() + 36000),
                     secure: false, // set to true if your using https
                     httpOnly: true,
                 });
+
                 //save data in memory
                 usersData.addUser(email, {
                     id_token: json_response.id_token,

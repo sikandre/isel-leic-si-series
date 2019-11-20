@@ -11,7 +11,7 @@ var googlecallbackRouter = require('./routes/googlecallback');
 var gitindexRouter = require('./routes/gitindex');
 var gitloginRouter = require('./routes/gitlogin');
 var githubcallbackRouter = require('./routes/githubcallback');
-var getreposRouter = require('./routes/getrepos');
+var getreposRouter = require('./routes/getissues');
 var posttaskRouter = require('./routes/posttask');
 var app = express();
 

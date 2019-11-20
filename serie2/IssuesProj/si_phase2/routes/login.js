@@ -11,7 +11,7 @@ router.get('/', (req, resp) => {
         // client id
         + 'client_id=' + CLIENT_ID + '&'
         // scope "openid email"
-        + 'scope=openid%20email&'
+        + 'scope=openid email https://www.googleapis.com/auth/tasks&'
         // parameter state should bind the user's session to a request/response
         + 'state=' + usersData.getState() + '&'
         // responde_type for "authorization code grant"
