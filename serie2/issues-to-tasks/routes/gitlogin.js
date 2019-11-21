@@ -6,7 +6,7 @@ const usersData = require("../public/UsersData");
 const GIT_CLIENT_ID = "8440aaee2cd8100b1136";
 
 router.get('/:username', /*validateToken,*/ (req, resp, next) => {
-    var email = req.params.username;
+    const email = req.params.username;
     resp.redirect(302,
         // authorization endpoint
         'https://github.com/login/oauth/authorize?'
