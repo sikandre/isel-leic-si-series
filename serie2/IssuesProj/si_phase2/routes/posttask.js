@@ -2,26 +2,25 @@ var express = require('express');
 var router = express.Router();
 const usersMap = require("../public/UsersData");
 const request = require("axios");
+const validateCookie = require( "../public/ValidateCookie");
+
 const CLIENT_ID = "747819205262-uteoim61ntfqe29s4bs8huqjebn6tqr6.apps.googleusercontent.com";
 
+router.get('/*', async (req, res, next) => {
+    if (!validateCookie.ValidateCookie(req)){
+        res.render('Forbidden');
+    } else {
+        let issue = JSON.parse(req.params[0]);
+        let user = usersMap.getUser(issue.username);
+        let googleAccessToken = user.google_access_token;
+        let url = 'https://www.googleapis.com/tasks/v1/users/@me/lists?' + 'key=' + CLIENT_ID;
 
-router.get('/*', async function (req, res, next) {
-    let issue = JSON.parse(req.params[0]);
-    let user = usersMap.getUser(issue.username);
-    let googleAccessToken = user.google_access_token;
-    let url = 'https://www.googleapis.com/tasks/v1/users/@me/lists?' + 'key=' + CLIENT_ID;
+        //get if or create a new tasklist ang return new id
+        let id = await promiseTaskListId(googleAccessToken);
+        let task = await insertTask(googleAccessToken, id, issue);
 
-    //get if or create a new tasklist ang return new id
-    let id = await promiseTaskListId(googleAccessToken);
-    console.log("id ", id);
-
-    //let task = await insertTask(googleAccessToken, id, issue);
-
-    //res.sendFile('./views/task');
-    //res.status(200);
-
-    res.send('test');
-
+        res.render('task', {task: task});
+    }
 });
 
 const promiseTaskListId = async (access_token) => {
@@ -39,16 +38,17 @@ const promiseTaskListId = async (access_token) => {
 };
 
 function createNewTaskList(access_token) {
-
+    //TODO
 }
 
 const insertTask = async (accessToken, taskListId, issue) => {
     try {
+        console.log(issue);
         const response = await request.post(
             'https://www.googleapis.com/tasks/v1/lists/tasklist/tasks?tasklist=' + taskListId + '&Client_id=' + CLIENT_ID,
             {
-                title: issue.title,
-                notes: issue.body
+                title: issue.issueTitle,
+                notes: issue.issueBody
             },
             {
                 headers: {

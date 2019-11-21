@@ -4,7 +4,6 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 const usersData = require("../public/UsersData");
 
-
 const JWT_SECRET = "vsoGMhmC5vq0NTNxHGgNqxNbvsoGMhmC5vq0NTNxHGgNqxNb";
 const CLIENT_ID = "747819205262-uteoim61ntfqe29s4bs8huqjebn6tqr6.apps.googleusercontent.com";
 const CLIENT_SECRET = "vsoGMhmC5vq0NTNxHGgNqxNb";

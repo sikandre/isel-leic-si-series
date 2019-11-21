@@ -8,7 +8,7 @@ const GIT_CLIENT_ID = "8440aaee2cd8100b1136";
 const GIT_CLIENT_SECRET = "e45df0fe9b0c45e85992dee198aff1ab54a94c20";
 
 router.get('/:username', (req, resp, next) => {
-    var email = req.params.username;
+    let email = req.params.username;
     if (req.query.state !== usersData.getState()) {
         resp.status(403);
         resp.render('Forbidden');

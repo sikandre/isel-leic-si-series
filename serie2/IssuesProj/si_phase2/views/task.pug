@@ -1,11 +1,22 @@
-extends layout
+extends lay.pug
 
-block layout-content
-    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css")
-    table.ui.compact.celled.definition.table
+block content
+    h1.ui.center.aligned.header Task Saved
+    table.ui.celled.table.center.aligned
         thead
             tr
-                th
-                th Repo Name
-                th Issue Title
-                th Issue Body
+                th Id
+                th Title
+                th Notes
+                th Status
+                th updated
+        tbody
+                tr
+                    td #{task.id}
+                    td #{task.title}
+                    td #{task.notes}
+                    td #{task.status}
+                    td #{task.updated}
+        tfoot
+            tr
+                th(colspan='6')

@@ -1,7 +1,20 @@
-extends layout
+extends lay
 
-block layout-content
-    link(rel="stylesheet" href="../stylesheets/gitstyle.css")
+block content
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+    style.
+        .col {
+            float: left;
+            width: 50%;
+            margin: auto;
+            padding: 0 50px;
+            margin-top: 6px;
+        }
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
     h1 #{email}
     h1 Welcome
     h2
@@ -12,4 +25,4 @@ block layout-content
             br
             a(href=`/logingit/${email}`)
                 button(style='font-size:24px' type='submit')
-                    i.fa.fa-github(aria-hidden='true') Get repository from Github
+                    i.fa.fa-github(aria-hidden='true')  Get repository from Github
