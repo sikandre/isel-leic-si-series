@@ -1,5 +1,5 @@
 {
-  "name": "si-phase2",
+  "name": "issues-to-tasks",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -14,7 +14,7 @@
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
     "morgan": "~1.9.1",
-    "pug": "2.0.0-beta11",
+    "pug": "^2.0.4",
     "request": "^2.88.0",
     "requests": "^0.3.0"
   },
