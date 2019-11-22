@@ -36,28 +36,28 @@ module.exports = (request, cookievalidator, usersData) => {
                 resp.render('Forbidden');
             } else {
                 const options = {
-                    url: 'https://github.com/login/oauth/access_token',
                     headers: {
-                        accept: 'application/json'
-                    },
-                    form: {
-                        code: req.query.code,
-                        client_id: GIT_CLIENT_ID,
-                        client_secret: GIT_CLIENT_SECRET,
-                        redirect_uri: 'http://localhost:3000/githubcallback/' + email,
-                        state: usersData.getState(),
+                        'accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded' 
                     }
                 };
-                request.post(options)
-                    .then(body => {
-                        const payload = JSON.parse(body);
+                const form = xwwwfurlenc({
+                    code: req.query.code,
+                    client_id: GIT_CLIENT_ID,
+                    client_secret: GIT_CLIENT_SECRET,
+                    redirect_uri: 'http://localhost:3000/githubcallback/' + email,
+                    state: usersData.getState(),
+                });
+                request.post('https://github.com/login/oauth/access_token', form, options)
+                    .then(response => {
+                        const payload = response.data;
                         const accessToken = payload.access_token;
                         usersData.addAccessTokenToUser(email, accessToken);
                         resp.redirect('/getrepos/' + email);
                     })
                     .catch(err => {
                         resp.statusCode = 400;
-                        resp.send({ err });
+                        resp.send({ err });// RENDER ERROR
                     });
             }
         },
@@ -66,31 +66,46 @@ module.exports = (request, cookievalidator, usersData) => {
                 res.render('Forbidden');
             } else {
                 let username = req.params.username;
-                let user = usersMap.getUser(username);
+                let user = usersData.getUser(username);
                 let accessToken = user.git_access_token;
                 let issues = [];
                 const options = {
-                    url: 'https://api.github.com/issues',
                     headers: {
                         "Authorization": "token " + accessToken,
                         accept: 'application/json',
                         'user-agent': 'si-phase2-project',
                     }
                 };
-                return request.get(options)
-                    .then(body => {
-                        const bodyParsed = JSON.parse(body);
+                return request.get('https://api.github.com/issues',options)
+                    .then(response => {
+                        const body = response.data;
 
-                        bodyParsed.forEach((issue) => issues.push({
+                        body.forEach((issue) => issues.push({
                             username: username,
                             repoName: issue.url,
                             issueTitle: issue.title,
                             issueBody: issue.body
                         }));
-                        return issues;
+                        return {issues : issues, username : username};
                     });
             }
         }
     }
+
+    function xwwwfurlenc(srcjson) {
+        if (typeof srcjson !== "object")
+            if (typeof console !== "undefined") {
+                console.log("\"srcjson\" is not a JSON object");
+                return null;
+            }
+        var urljson = "";
+        var keys = Object.keys(srcjson);
+        for (var i = 0; i < keys.length; i++) {
+            urljson += keys[i] + "=" + srcjson[keys[i]];
+            if (i < (keys.length - 1)) urljson += "&";
+        }
+        return urljson;
+    }
+
     return theApi;
 }

@@ -12,9 +12,9 @@ module.exports = (app, googleApi, githubApi, usersMap) => {
             resp.render('task', {task: task});
         },
         'getissues' : async function (req, resp) {
-            const issues = await githubApi.getissues();
-            res.status(200);
-            res.render('listrepos', {issues: issues, username: username});
+            const res = await githubApi.getissues(req, resp);
+            resp.status(200);
+            resp.render('listrepos', {issues: res.issues, username: res.username});
         },
         'statusCode404' : function (req, resp) {
             resp.statusCode = 404;
@@ -30,8 +30,8 @@ module.exports = (app, googleApi, githubApi, usersMap) => {
     app.get('/gitindex/:username', githubApi.gitindex);
     app.get('/logingit/:username', githubApi.login);
     app.get('/githubcallback/:username', githubApi.callback);
-    //app.get('/getrepos/:username', theApi.getissues)
-    //app.get('/posttask', theApi.posttask);
+    app.get('/getrepos/:username', theApi.getissues)
+    app.get('/posttask/*', googleApi.posttask);
 
     app.get('*', theApi.statusCode404);
 

@@ -8,7 +8,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const  jwt = require('jsonwebtoken');
-const request = require('request-promise');
+const request = require('axios');
 
 const app = express();
 
@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const usersData = require('./public/UsersData');
 const cookieValidator = require('./public/ValidateCookie')(usersData);
 
-const googleApi = require('./api/google-api.js')(usersData, request, jwt);
+const googleApi = require('./api/google-api.js')(request, cookieValidator, usersData, jwt);
 const githubApi = require('./api/github-api.js')(request, cookieValidator, usersData);
 
 const api = require('./api/issues-to-tasks-api.js')(app, googleApi, githubApi, usersData);
