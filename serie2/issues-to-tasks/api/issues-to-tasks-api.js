@@ -7,6 +7,9 @@ module.exports = (app, googleApi, githubApi, usersMap) => {
             usersMap.setState();
             resp.render('index', { title: 'Express' });
         },
+        'login' : function (req, resp) {
+            resp.redirect(302, googleApi.loginuri);
+        },
         'posttask' : async function (req, resp) {
             let task = await service.task();
             resp.render('task', {task: task});
@@ -24,7 +27,7 @@ module.exports = (app, googleApi, githubApi, usersMap) => {
 
     app.get('/', theApi.index);
     
-    app.get('/login', googleApi.login);
+    app.get('/login', theApi.login);
     app.get('/googlecallback', googleApi.callback);
 
     app.get('/gitindex/:username', githubApi.gitindex);

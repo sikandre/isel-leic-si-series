@@ -12,7 +12,6 @@ module.exports = {
 
     addUser: function(user, data) {
        map.set(user, data);
-       //console.log("userfrom data",map.get(user));
     },
     addAccessTokenToUser: function(user, access_token){
         let oldUser = map.get(user);
@@ -23,7 +22,6 @@ module.exports = {
             git_access_token: access_token
         };
         map.set(user, data);
-        //console.log("userfrom data",map.get(user))
     },
 
     setState: function () {

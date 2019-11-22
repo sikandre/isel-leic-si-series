@@ -22,6 +22,18 @@ module.exports = (request, cookieValidator, usersData, jwt) => {
                 // redirect uri used to register RP
                 + 'redirect_uri=http://localhost:3000/googlecallback');
         },
+        'loginuri' : 'https://accounts.google.com/o/oauth2/v2/auth?'
+        // client id
+        + 'client_id=' + CLIENT_ID + '&'
+        // scope "openid email"
+        + 'scope=openid email https://www.googleapis.com/auth/tasks&'
+        // parameter state should bind the user's session to a request/response
+        + 'state=' + usersData.getState() + '&'
+        // responde_type for "authorization code grant"
+        + 'response_type=code&'
+        // redirect uri used to register RP
+        + 'redirect_uri=http://localhost:3000/googlecallback',
+        
         'callback': function (req, resp) {
 
             if (req.query.state !== usersData.getState()) {
@@ -79,7 +91,7 @@ module.exports = (request, cookieValidator, usersData, jwt) => {
                 let id = await promiseTaskListId(googleAccessToken);
                 let task = await insertTask(googleAccessToken, id, issue);
 
-                resp.render('task', { task: task });
+                res.render('task', { task: task });
             }
         }
     }
@@ -92,12 +104,11 @@ module.exports = (request, cookieValidator, usersData, jwt) => {
                 "Authorization": "Bearer " + access_token,
                 accept: 'application/json'
             }
-        }).then((response) => {
-            console.log(response.data)
-            if (response.data.items.length == 0) {
+        }).then((body) => {
+            if (body.data.items.length == 0) {
                 return createNewTaskList(access_token);
             }
-            return response.data.items[0]["id"];
+            return body.items[0]["id"];
         });
     };
     function createNewTaskList(access_token) {
