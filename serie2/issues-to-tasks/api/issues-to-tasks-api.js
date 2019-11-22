@@ -5,7 +5,14 @@ module.exports = (app, service, usersData, cookievalidator) => {
     const theApi = {
 
         'index': function (req, resp) {
-            resp.render('index', { title: 'Issues to Tasks' });
+            const cookie = req.cookies['token'];
+            if(cookie != undefined){
+                const email = usersData.getEmailFromCookie(cookie);
+                resp.redirect(302,'/gitindex/' + email);
+            }
+            else {
+                resp.render('index', { title: 'Issues to Tasks' });
+            }
         },
         'login': function (req, resp) {
             resp.redirect(302, service.getGoogleLoginUri());
@@ -89,6 +96,11 @@ module.exports = (app, service, usersData, cookievalidator) => {
             resp.statusCode = 404;
             resp.render('error', { errorCode: resp.statusCode, reason: `Sorry! ${req.originalUrl} is not a valid path` });
         },
+        'logout' : function (req, resp) {
+            const cookie = req.cookies['token'];
+            resp.clearCookie('token');
+            resp.redirect(302,'/');
+        }
     }
 
     app.get('/', theApi.index);
@@ -101,6 +113,8 @@ module.exports = (app, service, usersData, cookievalidator) => {
     app.get('/githubcallback/:username', theApi.githubcallback);
     app.get('/getissues/:username', theApi.getissues)
     app.get('/posttask/*', theApi.storetask);
+
+    app.get('/logout', theApi.logout);
     app.get('*', theApi.statusCode404);
 
     function statusCode400(resp, err) {
@@ -112,10 +126,5 @@ module.exports = (app, service, usersData, cookievalidator) => {
 }
 
 /*
-uniformizar a utilização de async await
-
-distinguir melhor o que é api e o que é serviço
-apanhar erros de promises
-
 filtrar issues assigned e unassigned de repositorios publicos e privados
 */

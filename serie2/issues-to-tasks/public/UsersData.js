@@ -47,6 +47,12 @@ module.exports = () => {
                 return true;
             }
             return false;
+        },
+        getEmailFromCookie : (cookie) => {
+            const decrypt = jwt.verify(cookie, JWT_SECRET);
+            const data = map.get(decrypt.email);
+            const email = jwt.decode(data.id_token).email;
+            return email;
         }
     }
     theudata.setState();
