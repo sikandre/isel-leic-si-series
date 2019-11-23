@@ -55,7 +55,7 @@ module.exports = (request, usersData) => {
                     'user-agent': 'si-phase2-project',
                 }
             };
-            const response = await request.get('https://api.github.com/issues', options);
+            const response = await request.get('https://api.github.com/issues?filter=all', options);
 
             const body = response.data;
             body.forEach((issue) => issues.push({

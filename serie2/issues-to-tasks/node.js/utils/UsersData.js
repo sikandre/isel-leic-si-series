@@ -35,8 +35,8 @@ module.exports = (jwt) => {
         },
 
         consumeState : function (state) {
-            const index = validStates.indexOf(5);
-            if (validStates > -1) {
+            const index = validStates.indexOf(state);
+            if (index > -1) {
                 validStates.splice(index, 1);
             }
         },
