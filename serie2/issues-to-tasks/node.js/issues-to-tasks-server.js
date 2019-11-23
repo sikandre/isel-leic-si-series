@@ -6,9 +6,10 @@ const PORT = process.env.port || '3000'
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-//const logger = require('morgan');
+const logger = require('morgan');
 const  jwt = require('jsonwebtoken');
 const request = require('axios');
+const crypto = require("crypto");
 
 const app = express();
 
@@ -17,14 +18,14 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // middleware
-//app.use(logger('dev'));
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // setting up dependencies for injection !
-const usersData = require('./utils/UsersData')(jwt);
+const usersData = require('./utils/UsersData')(jwt, crypto);
 
 const cookieValidator = require('./utils/ValidateCookie')(usersData);
 

@@ -40,9 +40,9 @@ module.exports = (request, usersData, jwt) => {
             });
             const response = await request.post(TOKEN_ENDPOINT, form, options);
 
-            let jwt_payload = jwt.decode(response.data.id_token);
-            let email = jwt_payload.email;
-            let sub = jwt_payload.sub;
+            const jwt_payload = jwt.decode(response.data.id_token);
+            const email = jwt_payload.email;
+            const sub = jwt_payload.sub;
 
             const token = jwt.sign({ email, sub }, JWT_SECRET);
             //save data in memory
@@ -65,13 +65,11 @@ module.exports = (request, usersData, jwt) => {
             };
         },
         'storetask': async function (issue) {
-            let user = usersData.getUser(issue.username);
-            let googleAccessToken = user.google_access_token;
+            const user = usersData.getUser(issue.username);
+            const googleAccessToken = user.google_access_token;
             //let url = 'https://www.googleapis.com/tasks/v1/users/@me/lists?' + 'key=' + CLIENT_ID;
-
-            //get if or create a new tasklist ang return new id
-            let id = await promiseTaskListId(googleAccessToken);
-            let task = await insertTask(googleAccessToken, id, issue);
+            const id = await promiseTaskListId(googleAccessToken);
+            const task = await insertTask(googleAccessToken, id, issue);
             return task;
         }
     }
@@ -91,7 +89,7 @@ module.exports = (request, usersData, jwt) => {
         return body.data.items[0]["id"];
     }
     function createNewTaskList(access_token) {
-        //TODO
+        // this never happens
     }
 
     const insertTask = async (accessToken, taskListId, issue) => {

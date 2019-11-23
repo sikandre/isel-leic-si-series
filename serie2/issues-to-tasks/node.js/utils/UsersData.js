@@ -4,7 +4,7 @@ const JWT_SECRET = "vsoGMhmC5vq0NTNxHGgNqxNbvsoGMhmC5vq0NTNxHGgNqxNb";
 var map = new HashMap();
 const validStates = [];
 
-module.exports = (jwt) => {
+module.exports = (jwt, crypto) => {
 
     const theudata = {
         getUser: function (user) {
@@ -43,9 +43,12 @@ module.exports = (jwt) => {
 
         validateToken: (cookie) => {
             const decrypt = jwt.verify(cookie, JWT_SECRET);
-            let data = map.get(decrypt.email);
-            let jwt_payload = jwt.decode(data.id_token);
-            let sub = jwt_payload.sub;
+            const data = map.get(decrypt.email);
+            if(data === undefined) {
+                return false;
+            }
+            const jwt_payload = jwt.decode(data.id_token);
+            const sub = jwt_payload.sub;
             if (decrypt.sub === sub) {
                 return true;
             }
@@ -54,8 +57,14 @@ module.exports = (jwt) => {
         getEmailFromCookie : (cookie) => {
             const decrypt = jwt.verify(cookie, JWT_SECRET);
             const data = map.get(decrypt.email);
+            if(data === undefined) {
+                throw 'cookie malformed'
+            }
             const email = jwt.decode(data.id_token).email;
             return email;
+        },
+        'sha256' : function (data) {
+            return crypto.createHash("sha256").update(data, "binary").digest("base64");
         }
     }
     return theudata;

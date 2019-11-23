@@ -5,11 +5,12 @@ module.exports = (app, service, usersData, cookievalidator) => {
     const theApi = {
 
         'index': function (req, resp) {
-            if(req.cookies['google-token'] != undefined){
-                const email = usersData.getEmailFromCookie(cookie);
-                resp.redirect(302,'/gitindex/' + email);
-            }
-            else {
+            const googleCookie = req.cookies['google-token'];
+            const googleValidated = cookievalidator.validateGoogleCookie(googleCookie);
+            if (googleValidated) {
+                const email = usersData.getEmailFromCookie(googleCookie);
+                resp.redirect(302, '/gitindex/' + email);
+            } else {
                 resp.render('index', { title: 'Issues to Tasks' });
             }
         },
@@ -36,12 +37,23 @@ module.exports = (app, service, usersData, cookievalidator) => {
             }
         },
         'gitindex': function (req, resp) {
-            if (cookievalidator.ValidateCookie(req)) {
-                // TODO if this user has cookies for github then go to getissues
-                const email = req.params.username;
-                resp.render('gitindex', { email: email });
-            } else {
+            const googleCookie = req.cookies['google-token'];
+            const googleValidated = cookievalidator.validateGoogleCookie(googleCookie);
+            const githubValidated = cookievalidator.validateGithubCookie(req.cookies['github-token'], req.params.username);
+            if (googleValidated && githubValidated) {
+                const email = usersData.getEmailFromCookie(googleCookie);
+                resp.redirect(302, '/getissues/' + email);
+            } else if (!googleValidated && githubValidated) {
                 resp.render('Forbidden');
+            } else if (!googleValidated && !githubValidated) {
+                resp.redirect(302, '/');
+            } else {
+                const email = req.params.username;
+                const emailFromCookie = usersData.getEmailFromCookie(googleCookie);
+                if(emailFromCookie != email) {
+                    resp.render('Forbidden');
+                }
+                resp.render('gitindex', { email: email });
             }
         },
         'gitlogin': function (req, resp) {
@@ -59,9 +71,8 @@ module.exports = (app, service, usersData, cookievalidator) => {
                     const code = req.query.code;
                     const result = await service.gitcallback(email, code, state);
                     usersData.consumeState(state);
-                    if (!result) {
-                        throw 'post in github token endpoint was not successfull'
-                    }
+                    resp.statusCode = 200;
+                    resp.cookie(result.cookie.name, result.cookie.value, result.cookie.options);
                     resp.redirect('/getissues/' + email);
                 } catch (err) {
                     statusCode400(resp, err);
@@ -69,8 +80,11 @@ module.exports = (app, service, usersData, cookievalidator) => {
             }
         },
         'getissues': async function (req, resp) {
-            if (!cookievalidator.ValidateCookie(req)) {
-                res.render('Forbidden');
+
+            const googleValidated = cookievalidator.validateGoogleCookie(req.cookies['google-token']);
+            const githubValidated = cookievalidator.validateGithubCookie(req.cookies['github-token'], req.params.username);
+            if (!googleValidated || !githubValidated) {
+                resp.render('Forbidden');
             } else {
                 const username = req.params.username;
                 try {
@@ -84,7 +98,9 @@ module.exports = (app, service, usersData, cookievalidator) => {
         },
 
         'storetask': async function (req, resp) {
-            if (!cookievalidator.ValidateCookie(req)) {
+            const googleValidated = cookievalidator.validateGoogleCookie(req.cookies['google-token']);
+            const githubValidated = cookievalidator.validateGithubCookie(req.cookies['github-token'], req.params.username);
+            if (!cookievalidator.validateGoogleCookie(req.cookies['google-token'])) {
                 resp.render('Forbidden');
             } else {
                 try {
@@ -101,10 +117,12 @@ module.exports = (app, service, usersData, cookievalidator) => {
             resp.statusCode = 404;
             resp.render('error', { errorCode: resp.statusCode, reason: `Sorry! ${req.originalUrl} is not a valid path` });
         },
-        'logout' : function (req, resp) {
-            const cookie = req.cookies['google-token'];
+        'logout': function (req, resp) {
+            const googleCookie = req.cookies['google-token'];
+            const githubCookie = req.cookies['github-token'];
             resp.clearCookie('google-token');
-            resp.redirect(302,'/');
+            resp.clearCookie('github-token');
+            resp.redirect(302, '/');
         }
     }
 
@@ -129,7 +147,3 @@ module.exports = (app, service, usersData, cookievalidator) => {
 
     return theApi;
 }
-
-/*
-filtrar issues assigned e unassigned de repositorios publicos e privados
-*/

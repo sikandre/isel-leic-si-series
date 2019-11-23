@@ -41,7 +41,20 @@ module.exports = (request, usersData) => {
             const accessToken = payload.access_token;
             usersData.addAccessTokenToUser(email, accessToken);
 
-            return true;
+            const token = usersData.sha256(accessToken);
+
+            return {
+                email: email,
+                cookie: {
+                    name: 'github-token',
+                    value: token,
+                    options: {
+                        expires: new Date(Date.now() + (60 * 1000)),//sixty seconds
+                        secure: false,
+                        httpOnly: true,
+                    }
+                }
+            };
         },
         'getissues': async function (username) {
 
@@ -82,6 +95,7 @@ module.exports = (request, usersData) => {
         }
         return urljson;
     }
+
 
     return theService;
 }
