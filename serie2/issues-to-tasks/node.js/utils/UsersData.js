@@ -1,11 +1,10 @@
 var HashMap = require('hashmap');
-var jwt = require('jsonwebtoken');
 const JWT_SECRET = "vsoGMhmC5vq0NTNxHGgNqxNbvsoGMhmC5vq0NTNxHGgNqxNb";
 
 var map = new HashMap();
-var state = '';
+const validStates = [];
 
-module.exports = () => {
+module.exports = (jwt) => {
 
     const theudata = {
         getUser: function (user) {
@@ -26,16 +25,20 @@ module.exports = () => {
             map.set(user, data);
         },
 
-        setState: function () {
-            state = Math.round(new Date().getTime()).toString();
-            return this;
+        getNewState: function () {
+            const newState = Math.round(new Date().getTime()).toString();
+            validStates.push(newState);
+            return newState;
+        },
+        isValidState : function (state) {
+            return validStates.includes(state);
         },
 
-        getState: function () {
-            if (state === '') {
-                state = Math.round(new Date().getTime()).toString();
+        consumeState : function (state) {
+            const index = validStates.indexOf(5);
+            if (validStates > -1) {
+                validStates.splice(index, 1);
             }
-            return state;
         },
 
         validateToken: (cookie) => {
@@ -55,6 +58,5 @@ module.exports = () => {
             return email;
         }
     }
-    theudata.setState();
     return theudata;
 };

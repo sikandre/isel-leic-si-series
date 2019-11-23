@@ -8,20 +8,23 @@ const REDIRECT_URI = 'http://localhost:3000/googlecallback';
 const TOKEN_ENDPOINT = 'https://www.googleapis.com/oauth2/v3/token';
 
 // Change to google oauth
-module.exports = (request, cookieValidator, usersData, jwt) => {
+module.exports = (request, usersData, jwt) => {
 
     const theApi = {
-        'loginuri': 'https://accounts.google.com/o/oauth2/v2/auth?'
+        'loginuri': function () {
+            const ustate = usersData.getNewState();
+            return 'https://accounts.google.com/o/oauth2/v2/auth?'
             // client id
             + 'client_id=' + CLIENT_ID + '&'
             // scope "openid email"
             + 'scope=openid email https://www.googleapis.com/auth/tasks&'
             // parameter state should bind the user's session to a request/response
-            + 'state=' + usersData.getState() + '&'
+            + 'state=' + ustate + '&'
             // responde_type for "authorization code grant"
             + 'response_type=code&'
             // redirect uri used to register RP
-            + 'redirect_uri=http://localhost:3000/googlecallback',
+            + 'redirect_uri=http://localhost:3000/googlecallback';
+        },
 
         'callback': async function (code) {
 
@@ -42,20 +45,19 @@ module.exports = (request, cookieValidator, usersData, jwt) => {
             let sub = jwt_payload.sub;
 
             const token = jwt.sign({ email, sub }, JWT_SECRET);
-
             //save data in memory
             usersData.addUser(email, {
                 id_token: response.data.id_token,
                 google_access_token: response.data.access_token
             });
-
+            
             return {
                 email: email,
                 cookie: {
-                    name: 'token',
+                    name: 'google-token',
                     value: token,
                     options: {
-                        expires: new Date(Date.now() + 36000),
+                        expires: new Date(Date.now() + (60*1000)),//sixty seconds
                         secure: false,
                         httpOnly: true,
                     }

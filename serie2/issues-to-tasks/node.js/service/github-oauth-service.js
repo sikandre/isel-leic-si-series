@@ -4,11 +4,12 @@
 const GIT_CLIENT_ID = "8440aaee2cd8100b1136";
 const GIT_CLIENT_SECRET = "e45df0fe9b0c45e85992dee198aff1ab54a94c20";
 
-module.exports = (request, cookievalidator, usersData) => {
+module.exports = (request, usersData) => {
 
     const theService = {
 
         'loginuri': function (email) {
+            const ustate = usersData.getNewState();
             // authorization endpoint
             return 'https://github.com/login/oauth/authorize?'
                 // client id
@@ -16,11 +17,11 @@ module.exports = (request, cookievalidator, usersData) => {
                 // scope "openid email"
                 + 'scope=repo&'
                 // parameter state should bind the user's session to a request/response
-                + 'state=' + usersData.getState() + '&'
+                + 'state=' + ustate + '&'
                 // redirect uri used to register RP
                 + 'redirect_uri=http://localhost:3000/githubcallback/' + email;
         },
-        'callback': async function (email, code) {
+        'callback': async function (email, code, state) {
             const options = {
                 headers: {
                     'accept': 'application/json',
@@ -32,7 +33,7 @@ module.exports = (request, cookievalidator, usersData) => {
                 client_id: GIT_CLIENT_ID,
                 client_secret: GIT_CLIENT_SECRET,
                 redirect_uri: 'http://localhost:3000/githubcallback/' + email,
-                state: usersData.getState(),
+                state: state,
             });
             let response = await request.post('https://github.com/login/oauth/access_token', form, options)
 

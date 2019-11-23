@@ -6,30 +6,30 @@ const PORT = process.env.port || '3000'
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+//const logger = require('morgan');
 const  jwt = require('jsonwebtoken');
 const request = require('axios');
 
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, '../../views'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // middleware
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // setting up dependencies for injection !
-const usersData = require('./utils/UsersData')();
+const usersData = require('./utils/UsersData')(jwt);
 
 const cookieValidator = require('./utils/ValidateCookie')(usersData);
 
-const googleService = require('./service/google-oauth-service.js')(request, cookieValidator, usersData, jwt);
-const githubService = require('./service/github-oauth-service.js')(request, cookieValidator, usersData);
+const googleService = require('./service/google-oauth-service.js')(request, usersData, jwt);
+const githubService = require('./service/github-oauth-service.js')(request, usersData);
 const service = require('./service/service.js')(googleService, githubService);
 const api = require('./api/issues-to-tasks-api.js')(app, service, usersData, cookieValidator);
 

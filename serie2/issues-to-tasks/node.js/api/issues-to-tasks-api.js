@@ -5,8 +5,7 @@ module.exports = (app, service, usersData, cookievalidator) => {
     const theApi = {
 
         'index': function (req, resp) {
-            const cookie = req.cookies['token'];
-            if(cookie != undefined){
+            if(req.cookies['google-token'] != undefined){
                 const email = usersData.getEmailFromCookie(cookie);
                 resp.redirect(302,'/gitindex/' + email);
             }
@@ -18,13 +17,16 @@ module.exports = (app, service, usersData, cookievalidator) => {
             resp.redirect(302, service.getGoogleLoginUri());
         },
         'googlecallback': async function (req, resp) {
-            if (req.query.state !== usersData.getState()) {
+            const state = req.query.state;
+            if (!usersData.isValidState(state)) {
                 resp.statusCode = 403;
                 resp.render('Forbidden');
             } else {
                 try {
                     const code = req.query.code;
+                    const state = req.query.state;
                     const result = await service.googlecallback(code);
+                    usersData.consumeState(state);
                     resp.statusCode = 200;
                     resp.cookie(result.cookie.name, result.cookie.value, result.cookie.options);
                     resp.redirect('/gitindex/' + result.email);
@@ -35,6 +37,7 @@ module.exports = (app, service, usersData, cookievalidator) => {
         },
         'gitindex': function (req, resp) {
             if (cookievalidator.ValidateCookie(req)) {
+                // TODO if this user has cookies for github then go to getissues
                 const email = req.params.username;
                 resp.render('gitindex', { email: email });
             } else {
@@ -46,14 +49,16 @@ module.exports = (app, service, usersData, cookievalidator) => {
             resp.redirect(302, service.getGitLoginUri(email));
         },
         'githubcallback': async function (req, resp) {
-            if (req.query.state !== usersData.getState()) {
+            const state = req.query.state;
+            if (!usersData.isValidState(state)) {
                 resp.status(403);
                 resp.render('Forbidden');
             } else {
                 try {
                     const email = req.params.username;
                     const code = req.query.code;
-                    const result = await service.gitcallback(email, code);
+                    const result = await service.gitcallback(email, code, state);
+                    usersData.consumeState(state);
                     if (!result) {
                         throw 'post in github token endpoint was not successfull'
                     }
@@ -97,8 +102,8 @@ module.exports = (app, service, usersData, cookievalidator) => {
             resp.render('error', { errorCode: resp.statusCode, reason: `Sorry! ${req.originalUrl} is not a valid path` });
         },
         'logout' : function (req, resp) {
-            const cookie = req.cookies['token'];
-            resp.clearCookie('token');
+            const cookie = req.cookies['google-token'];
+            resp.clearCookie('google-token');
             resp.redirect(302,'/');
         }
     }
