@@ -100,7 +100,7 @@ module.exports = (app, service, usersData, cookievalidator) => {
         'storetask': async function (req, resp) {
             const googleValidated = cookievalidator.validateGoogleCookie(req.cookies['google-token']);
             const githubValidated = cookievalidator.validateGithubCookie(req.cookies['github-token'], req.params.username);
-            if (!cookievalidator.validateGoogleCookie(req.cookies['google-token'])) {
+            if (!googleValidated || !githubValidated ) {
                 resp.render('Forbidden');
             } else {
                 try {
