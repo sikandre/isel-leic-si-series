@@ -203,11 +203,12 @@ Neste trabalho prático pretendemos responder aos vários exercícios propostos 
 	Como princípio geral, o desenho do sistema deve conceder as permissões mínimas aos roles para executarem as ações necessárias, proibindo por omissão, em vez de proibir como excepção.
 
 \section{Exercício 3}
+	Em CVE-2019-9766 trata-se de uma vulnerabilidade buffer-overflow baseada no stack. Esta vulnerabilidade é causada pela coincidência no stack de dados do programa (variáveis locais à função) e dados de controlo de fluxo (endereço de retorno para função chamadora e endereço do início da frame anterior). Se a escrita numa variável local exceder os limites dos dados do programa e esmagar os dados de controlo de fluxo, quando a função retornar pode ser executado código arbitrário. Neste caso, é a operação de conversão de um ficheiro que pode ser explorada, tirando partido da dimensão da zona do stack reservada a dados locais da função.
 
-
-\newpage
 \section{Exercício 4}
-
+	Tanto a vulnerabilidade buffer overflow como cross-site scripting dizem respeito à execução de código arbitrário.
+	
+\newpage
 
 \section{Exercício 5}
 
