@@ -207,11 +207,11 @@ Neste trabalho prático pretendemos responder aos vários exercícios propostos 
 
 \section{Exercício 4}
 	Tanto a vulnerabilidade buffer overflow como cross-site scripting dizem respeito à execução de código arbitrário.
-	
-\newpage
 
 \section{Exercício 5}
+Se o atacante conseguisse explorar a vulnerabilidade CSRF da rota /googlecallback, fazendo a vítima efectuar um pedido GET para essa rota com um state válido e o seu code, a aplicação tentaria trocar o code pelo access token do atacante, no que seria bem sucedida. Se a vítima prosseguisse o fluxo da aplicação, estaria a guardar os seus issues em tasks da conta do atacante.
 
+\newpage
 
 \section{Exercício 6}
 	
