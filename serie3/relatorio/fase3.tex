@@ -214,6 +214,18 @@ Se o atacante conseguisse explorar a vulnerabilidade CSRF da rota /googlecallbac
 \newpage
 
 \section{Exercício 6}
+	\subsection*{6.1}
+	Foi iniciada uma instância com o id 472900268124152302695985496522790539409. A aplicação está disponível em https://google-gruyere.appspot.com/472900268124152302695985496522790539409/.
+	Foi criada uma conta na app Gruyere com o utilizador LI51N-SI1920iG01 e a password gruyerepass.
+	\subsection*{6.2}
+	 \textbf{Upload XSS} - Foi elaborado o documento html upload\_xss2.html que contem um elemento script que executa a função alert com as cookies do utilizador. Depois de carregar o ficheiro para o servidor, acedeu-se ao url fornecido. Em resultado foi realizado pelo browser um pedido GET para uma rota dentro do mesmo domínio, o que implicou que o browser envia as cookies que possui para esse domínio, fazendo com que a informação presente nas cookies do utilizador fosse acessível ao documento carregado.
+	 \newline
+	 
+	 \textbf{Reflected XSS} - Foi iniciada uma instância do browser com a flag --disable-xss-auditor. Foi elaborado o seguinte url:\newline https://google-gruyere.appspot.com/472900268124152302695985496522790539409/<script>\newline
+	 alert(document.cookie);</script>\newline, que injecta no documento um elemento script que executa código arbitrário, tirando partido do facto de a aplicação encaminhar directamente os dados de entrada na mensagem que exibe ao utilizador.
+	 \newline
+	 
+	 \textbf{Stored XSS} - A vulnerabilidade foi explorada criando um snippet com o seguinte conteúdo: <a onmouseover="alert(document.cookie)" href="\#">exploit!</a>, que regista um evento
 	
 \newpage
 
