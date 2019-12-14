@@ -225,8 +225,12 @@ Se o atacante conseguisse explorar a vulnerabilidade CSRF da rota /googlecallbac
 	 alert(document.cookie);</script>\newline, que injecta no documento um elemento script que executa código arbitrário, tirando partido do facto de a aplicação encaminhar directamente os dados de entrada na mensagem que exibe ao utilizador.
 	 \newline
 	 
-	 \textbf{Stored XSS} - A vulnerabilidade foi explorada criando um snippet com o seguinte conteúdo: <a onmouseover="alert(document.cookie)" href="\#">exploit!</a>, que regista um evento
+	 \textbf{Stored XSS} - A vulnerabilidade foi explorada criando um snippet com o seguinte conteúdo: <a onmouseover="alert(document.cookie)" href="\#">exploit!</a>, que regista um evento quando o utilizador passa o rato por cima do snippet, mostrando em janela de diálogo os cookies do utilizador.
 	
+	\subsection*{6.3}
+	Como já vimos, a app Gruyere é vulnerável a ataques do tipo XSS (stored, upload e reflected). Para receber as cookies de uma vítima na sua app, o atacante necessita de confeccionar um script que, sem o conhecimento da vítima, faça um pedido GET para a sua aplicação com as cookies na query string.
+	Como as cookies só estão disponíveis em documentos da mesma origem (SOP), o atacante precisa de injectar esse script numa página do domínio da aplicação Gruyere, o que já vimos que é possível.\newline
+	O ataque foi executado, tendo sido verificada a existência de um documento na BD na rota siserie3-result da app do atacante.
 \newpage
 
 
