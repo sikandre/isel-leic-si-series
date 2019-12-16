@@ -180,9 +180,8 @@ José \textsc{Simão}\\
 O trabalho realizado para este fase pretende que os temas desenvolvidos durante as aulas sejam postos em prática. Para esta fase os exercícios focaram essencialmente a segunda parte da matéria.\\
 
 \begin{itemize}
-  \item Autenticação baseadas em passwords
-  \item Gestão de Identidade em Aplicações Web
   \item Modelos de Controlo de Acesso
+  \item Vulnerabilidades em aplicações nativas, base de dados e web
 \end{itemize}
 
 Neste trabalho prático pretendemos responder aos vários exercícios propostos e implementar uma demonstração dos pontos referidos.
@@ -231,7 +230,52 @@ Se o atacante conseguisse explorar a vulnerabilidade CSRF da rota /googlecallbac
 	Como já vimos, a app Gruyere é vulnerável a ataques do tipo XSS (stored, upload e reflected). Para receber as cookies de uma vítima na sua app, o atacante necessita de confeccionar um script que, sem o conhecimento da vítima, faça um pedido GET para a sua aplicação com as cookies na query string.
 	Como as cookies só estão disponíveis em documentos da mesma origem (SOP), o atacante precisa de injectar esse script numa página do domínio da aplicação Gruyere, o que já vimos que é possível.\newline
 	O ataque foi executado, tendo sido verificada a existência de um documento na BD na rota siserie3-result da app do atacante.
-\newpage
+	
+
+	
+\section{Exercício 7}
+	\subsection*{7.1}
+Autenticou-se o utilizador Alice na aplicação Elgg. Efetuou-se um pedido GET para a rota /profile/:user com user=alice. Constatou-se que nesse pedido foram enviados os headers referer e cookie com uma cookie com o nome Elgg.
+De seguida, foi efectuado um pedido POST para a rota /action/friends/add. Além de ser enviado o header cookie com a mesma cookie do pedido GET, foram enviados na query string os seguintes parâmetros:
+\begin{itemize}
+	\item \_\_elgg\_token
+	\item \_\_elgg\_ts
+	\item friend	
+\end{itemize}
+O parâmetro friend é único por utilizador e não é alterado. Os parâmetros \_\_elgg\_token e \_\_elgg\_ts (timestamp) são gerados por cada pedido do formulário de edição do perfil.
+
+	\subsection*{7.2}
+	Foi configurado o adaptador de rede para funcionar no modo bridge. A figura 1 apresenta o ping feito com sucesso à VM-elgg e à VM-attacker.
+	
+	Configurou-se a aplicação do atacante em VM-attacker. Colocou-se o conteúdo do ficheiro anexo attacker.html em index.html. A partir deste momento, a aplicação que responde por 192.168.1.122 envia o ficheiro malicioso.
+	
+	Copiou-se a aplicação Elgg para a pasta /var/www/home da VM-elgg.
+	
+	Editou-se o documento hosts no host para que os endereços da app elgg e da app do atacante passem a ser resolvidos localmente. Adicionaram-se as seguintes duas linhas ao ficheiro:
+	\begin{itemize}
+		\item 192.168.1.122 www.csrflabattacker.com
+		\item 192.168.1.123 www.csrflabelgg.com
+	\end{itemize}
+	Acedeu-se a partir da máquina host à aplicação Elgg para realizar login como o utilizador Alice. Abriu-se uma outra janela do browser para se aceder à aplicação atacante. A figura 2 mostra este passo do ataque. Em seguida, acedeu-se ao relatório de actividade da aplicação Elgg, de onde consta o efeito do ataque (Figura 3).
+	
+	
+\begin{figure}[!htb]
+	\includegraphics[width=\linewidth]{img/ping}
+	\caption{Endereços IP das VM's e estabelecimento do ping desde a máquina host}
+	\label{fig:ping}
+\end{figure}
+\begin{figure}[!htb]
+	\includegraphics[width=\linewidth]{img/access}
+	\caption{Vítima visita a aplicação atacante}
+	\label{fig:access}
+\end{figure}
+\begin{figure}[!htb]
+	\includegraphics[width=\linewidth]{img/done}
+	\caption{Como efeito do ataque, Alice é agora amiga de Boby}
+	\label{fig:done}
+\end{figure}
+
+
 
 
 \end{document}
