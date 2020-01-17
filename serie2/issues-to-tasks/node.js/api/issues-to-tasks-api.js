@@ -50,7 +50,7 @@ module.exports = (app, service, usersData, cookievalidator) => {
             } else {
                 const email = req.params.username;
                 const emailFromCookie = usersData.getEmailFromCookie(googleCookie);
-                if(emailFromCookie != email) {
+                if (emailFromCookie != email) {
                     resp.render('Forbidden');
                 }
                 resp.render('gitindex', { email: email });
@@ -98,18 +98,13 @@ module.exports = (app, service, usersData, cookievalidator) => {
         },
 
         'storetask': async function (req, resp) {
-            const googleValidated = cookievalidator.validateGoogleCookie(req.cookies['google-token']);
-            const githubValidated = cookievalidator.validateGithubCookie(req.cookies['github-token'], req.params.username);
-            if (!googleValidated || !githubValidated ) {
-                resp.render('Forbidden');
-            } else {
-                try {
-                    let issue = JSON.parse(req.params[0]);
-                    const task = await service.storetask(issue);
-                    resp.render('task', { task: task });
-                } catch (err) {
-                    statusCode400(resp, err);
-                }
+            // TODO: make this route a post with issue on body
+            try {
+                let issue = JSON.parse(req.params[0]);
+                const task = await service.storetask(issue);
+                resp.render('task', { task: task });
+            } catch (err) {
+                statusCode400(resp, err);
             }
         },
 
@@ -118,8 +113,6 @@ module.exports = (app, service, usersData, cookievalidator) => {
             resp.render('error', { errorCode: resp.statusCode, reason: `Sorry! ${req.originalUrl} is not a valid path` });
         },
         'logout': function (req, resp) {
-            const googleCookie = req.cookies['google-token'];
-            const githubCookie = req.cookies['github-token'];
             resp.clearCookie('google-token');
             resp.clearCookie('github-token');
             resp.redirect(302, '/');
